@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark,.dark *));
+
+* {
+  font-family: "Manrope", sans-serif;
+  
+}
+
+@theme {
+   
+    --color-primary: #2563EB;           /* ব্র্যান্ডিং, নেভিগেশন */
+    --color-accent: #F59E0B;            /* CTA বাটন (Amber Yellow) */
+    --color-background: #FFFFFF;        /* মূল পেজের ব্যাকগ্রাউন্ড */
+    --color-surface: #F8FAFC;           /* NavBar ব্যাকগ্রাউন্ড (খুব হালকা গ্রে) */
+    --color-text-base: #1F2937;         /* মূল টেক্সট */
+    --color-text-secondary: #4B5563;    /* হালকা টেক্সট */
+    --color-border: #E5E7EB;            /* ডিফল্ট বর্ডার কালার */
+
+}
+.dark {
+    --color-background: #111827;     /* ডার্ক মোড ব্যাকগ্রাউন্ড */
+    --color-surface: #1F2937;        /* ডার্ক মোড NavBar/সারফেস */
+    
+    --color-text-base: #F3F4F6;      /* ডার্ক মোড মূল টেক্সট */
+    --color-text-secondary: #9CA3AF; /* ডার্ক মোড সাব-টেক্সট */
+    
+    --color-primary: #60A5FA;        /* ডার্ক মোডে উজ্জ্বল নীল */
+    --color-accent: #F59E0B;         /* অ্যাকসেন্ট কালার একই */
+    --color-border: #374151;         /* ডার্ক মোড বর্ডার */
+}
