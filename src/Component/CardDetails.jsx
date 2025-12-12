@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import useAxios from './Hook/useAxios';
 import { FaStar, FaUsers, FaGasPump, FaCog, FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import { AuthContex } from '../Contex/AuthProvider';
+import Payment from './Payment/Payment';
 
 
 
 export default function CarDetails() {
+  const [showModal,setShowModal] = useState(false)
   const axios = useAxios();
   const { id } = useParams();
   const navigate = useNavigate()
@@ -32,6 +34,7 @@ export default function CarDetails() {
 
   } = useForm();
 
+
   const onSubmit = async (data) => {
     console.log(data)
     const bookingInfo = {
@@ -39,9 +42,9 @@ export default function CarDetails() {
       email: user?.email,
       pickupDate: data.pickupDate,
       returnDate: data.returnDate,
-      paymentStatus:'pending',
-      car:car,
-      
+      paymentStatus: 'pending',
+      car: car,
+
 
     };
     const result = axiosInstance.post('/booking', bookingInfo)
@@ -140,15 +143,19 @@ export default function CarDetails() {
                   />
                 </div>
 
-                <button type='submit'
-
+                <button type='button'
+                  onClick={()=>setShowModal(true)}
                   className="w-full bg-primary  text-white font-medium py-2.5 rounded-lg transition-colors"
                 >
                   Book Now
                 </button>
-
+                
               </form>
-
+                {
+                  showModal &&  <Payment onClose={()=>setShowModal(false)}></Payment>
+                }
+               
+              
 
               <div className="flex items-center justify-between text-sm text-text-secondary mt-4">
                 <div className="flex items-center gap-2"><FaMapMarkerAlt /> {car.location}</div>
@@ -158,6 +165,7 @@ export default function CarDetails() {
           </div>
         </aside>
       </div>
+    
     </main>
   );
 }

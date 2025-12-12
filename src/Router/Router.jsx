@@ -15,6 +15,8 @@ import AddCar from "../Component/Dashboaed/Admin/AddCar";
 import ManageCar from "../Component/Dashboaed/Admin/ManageCar/ManageCar";
 import MangeBooking from "../Component/Dashboaed/Admin/MAnageBook/MangeBooking";
 import MyBooking from "../Component/MyBooking";
+import Contact from "../Component/Contact";
+import MyAllbooking from "../Component/Dashboaed/user/MyAllbooking";
 
 
 
@@ -35,13 +37,17 @@ export const router = createBrowserRouter([
         path: '/carDetails/:id',
         Component: CardDetails
       },
-      {
-        path: '/payment',
-        element: <PrivateRoute><Payment></Payment></PrivateRoute>
-      },
+      // {
+      //   path: '/payment',
+      //   element: <PrivateRoute><Payment></Payment></PrivateRoute>
+      // },
       {
         path: '/my-booking',
         element: <PrivateRoute><MyBooking></MyBooking></PrivateRoute>
+      },
+      {
+        path:'/contact',
+        Component:Contact
       }
     ]
   },
@@ -78,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/booking',
         Component: MangeBooking
+      },
+      {
+        path:'/dashboard/my-bookings',
+        Component:MyAllbooking
       }
     ]
   }

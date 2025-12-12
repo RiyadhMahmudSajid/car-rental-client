@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, NavLink } from 'react-router';
 import { AuthContex } from '../../Contex/AuthProvider';
+
 
 import { 
     FiHome, FiUser, FiLogOut, FiMenu, FiPlusCircle,
@@ -9,37 +10,53 @@ import {
 import { BsCarFrontFill } from "react-icons/bs";
 import { IoCloseSharp } from 'react-icons/io5';
 import { FaHome } from 'react-icons/fa';
+import useUserRole from '../Hook/useUserRole';
 
 const DashboardSidebar = () => {
+
     const { logOut } = useContext(AuthContex);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    const navLinks = [
-        { to: "/dashboard", icon: FiHome, label: "Overview" },
+    const { role, isLoading } = useUserRole(); 
+    console.log(role)
 
-      
+    if (isLoading) {
+        return (
+            <div className="p-10 text-center font-bold text-primary text-xl">
+                Loading Sidebar...
+            </div>
+        );
+    }
+
+   
+    const adminLinks = [
+        { to: "/dashboard", icon: FiHome, label: "Overview" },
         { to: "/dashboard/manage-car", icon: BsCarFrontFill, label: "Manage Cars" },
         { to: "/dashboard/add-car", icon: FiPlusCircle, label: "Add Car" },
-
-       
         { to: "/dashboard/booking", icon: FiClipboard, label: "Bookings" },
-
-        
         { to: "/dashboard/users", icon: FiUser, label: "Users" },
-
-        
         { to: "/dashboard/payments", icon: FiDollarSign, label: "Payments" },
-
-       
         { to: "/dashboard/reviews", icon: FiStar, label: "Reviews" },
-
-       
         { to: "/dashboard/settings", icon: FiSettings, label: "Settings" },
     ];
 
+
+    const userLinks = [
+        { to: "/dashboard", icon: FiHome, label: "Overview" },
+        { to: "/dashboard/my-bookings", icon: FiClipboard, label: "My Bookings" },
+        { to: "/dashboard/my-payments", icon: FiDollarSign, label: "My Payments" },
+        { to: "/dashboard/my-reviews", icon: FiStar, label: "My Reviews" },
+        { to: "/dashboard/settings", icon: FiSettings, label: "Settings" },
+    ];
+     
+ 
+    
+    let navLinks = role === "Admin" ? adminLinks : userLinks;
+    console.log(navLinks)
+
     return (
         <>
-       
+            
             <button
                 onClick={() => setSidebarOpen(true)}
                 className="fixed top-4 left-4 z-40 p-3 bg-surface border rounded-lg shadow-lg hover:bg-border transition lg:hidden"
@@ -47,7 +64,6 @@ const DashboardSidebar = () => {
                 <FiMenu className="w-6 h-6" />
             </button>
 
-    
             {sidebarOpen && (
                 <div
                     onClick={() => setSidebarOpen(false)}
@@ -55,7 +71,6 @@ const DashboardSidebar = () => {
                 />
             )}
 
-  
             <aside
                 className={`
                     fixed top-0 left-0 z-50 h-full w-64
@@ -65,7 +80,7 @@ const DashboardSidebar = () => {
                     ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
                 `}
             >
-                {/* Header */}
+              
                 <div className="flex justify-between items-center mb-10">
                     <h1 className="text-3xl font-extrabold text-primary tracking-tight">
                         Dashboard
@@ -79,9 +94,8 @@ const DashboardSidebar = () => {
                     </button>
                 </div>
 
-      
                 <nav className="flex flex-col gap-2">
-                    {navLinks.map((link) => (
+                    {navLinks .map((link) => (
                         <NavLink
                             key={link.to}
                             to={link.to}
@@ -100,19 +114,20 @@ const DashboardSidebar = () => {
                             {link.label}
                         </NavLink>
                     ))}
+                    
                 </nav>
 
-    
+           
                 <div className="mt-auto pt-6 border-t border-border ">
-                     <Link
-
-                       to='/'
+                    <Link
+                        to='/'
                         className="flex items-center gap-3 w-full mb-2 px-4 py-3 bg-primary 
                         text-white font-semibold rounded-xl hover:bg-red-600 
                         transition shadow"
                     >
                         <FaHome className="w-5 h-5" /> Home
                     </Link>
+
                     <button
                         onClick={logOut}
                         className="flex items-center gap-3 w-full px-4 py-3 bg-red-500 
