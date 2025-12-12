@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router';
+import {  useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import useAxios from './Hook/useAxios';
 import { FaStar, FaUsers, FaGasPump, FaCog, FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
@@ -10,10 +10,11 @@ import Payment from './Payment/Payment';
 
 
 export default function CarDetails() {
-  const [showModal,setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [bookingId, setBookingId] = useState(null);
   const axios = useAxios();
   const { id } = useParams();
-  const navigate = useNavigate()
+
   const axiosInstance = useAxios()
   const { user } = useContext(AuthContex)
   const { data: car, isLoading, isError } = useQuery({
@@ -25,7 +26,7 @@ export default function CarDetails() {
     enabled: !!id,
   });
 
-
+ 
 
   const {
     register,
@@ -47,9 +48,14 @@ export default function CarDetails() {
 
 
     };
-    const result = axiosInstance.post('/booking', bookingInfo)
+    const result = await axiosInstance.post('/booking', bookingInfo)
+     const newBookingId = result.data.insertedId;
+      setBookingId(newBookingId);
+    setShowModal(true)
     console.log(result)
-    navigate('/payment')
+    console.log(car._id);
+ 
+
   }
   if (isLoading)
     return <div className="min-h-[60vh] flex items-center justify-center text-text-secondary">Loading...</div>;
@@ -143,19 +149,20 @@ export default function CarDetails() {
                   />
                 </div>
 
-                <button type='button'
-                  onClick={()=>setShowModal(true)}
+                <button type='submit'
+                  // onClick={()=>setShowModal(true)}
                   className="w-full bg-primary  text-white font-medium py-2.5 rounded-lg transition-colors"
                 >
                   Book Now
                 </button>
-                
+
               </form>
-                {
-                  showModal &&  <Payment onClose={()=>setShowModal(false)}></Payment>
-                }
-               
-              
+              {
+                showModal && <Payment id={bookingId} onClose={() => setShowModal(false)}></Payment>
+                
+              }
+
+
 
               <div className="flex items-center justify-between text-sm text-text-secondary mt-4">
                 <div className="flex items-center gap-2"><FaMapMarkerAlt /> {car.location}</div>
@@ -165,7 +172,7 @@ export default function CarDetails() {
           </div>
         </aside>
       </div>
-    
+
     </main>
   );
 }
