@@ -2,12 +2,15 @@ import React, { useContext } from 'react';
 import useAxios from '../../Hook/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContex } from '../../../Contex/AuthProvider';
+import { ModalContxt } from '../../../Contex/ModalProvider';
+import Payment from '../../Payment/Payment';
 
 const MyAllbooking = () => {
+    const {showModal, setShowModal} = useContext(ModalContxt)
     const { user } = useContext(AuthContex);
     const axiosInstance = useAxios();
 
-    const { data: bookings = [], isLoading } = useQuery({
+    const { data: bookings = [] } = useQuery({
         queryKey: ['my-booking'],
         queryFn: async () => {
             const result = await axiosInstance.get(`/my-booking?email=${user.email}`);
@@ -15,9 +18,9 @@ const MyAllbooking = () => {
         }
     });
 
-    if (isLoading) {
-        return <p className="text-center text-lg py-10">Loading...</p>;
-    }
+    // if (isLoading) {
+    //     return <p className="text-center text-lg py-10">Loading...</p>;
+    // }
 
     return (
         <div className="p-6">
@@ -33,7 +36,7 @@ const MyAllbooking = () => {
                             <th className="p-4">Return</th>
                             <th className="p-4">Price/Day</th>
                             <th className="p-4">Payment</th>
-                            <th className="p-4">Status</th>
+                            {/* <th className="p-4">Status</th> */}
                             <th className="p-4 text-center">Actions</th>
                         </tr>
                     </thead>
@@ -83,20 +86,23 @@ const MyAllbooking = () => {
                                 </td>
 
                                 {/* Booking Status */}
-                                <td className="p-4">
+                                {/* <td className="p-4">
                                     <span className="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
                                         {booking.status || "pending"}
                                     </span>
-                                </td>
+                                </td> */}
 
                                 {/* Action Buttons */}
                                 <td className="p-4 text-center flex gap-2 justify-center">
                                     {booking.paymentStatus === "pending" && (
-                                        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+                                        <button type='button' onClick={()=> setShowModal(true)} className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
                                             Pay
                                         </button>
                                     )}
+                                    {
+                                        showModal && <Payment  ></Payment>
 
+                                    }
                                     <button className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition">
                                         Cancel
                                     </button>

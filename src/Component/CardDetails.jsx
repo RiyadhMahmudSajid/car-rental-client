@@ -6,11 +6,13 @@ import { FaStar, FaUsers, FaGasPump, FaCog, FaMapMarkerAlt, FaCalendarAlt } from
 import { useForm } from 'react-hook-form';
 import { AuthContex } from '../Contex/AuthProvider';
 import Payment from './Payment/Payment';
+import { ModalContxt } from '../Contex/ModalProvider';
 
 
 
 export default function CarDetails() {
-  const [showModal, setShowModal] = useState(false)
+  // const [showModal, setShowModal] = useState(false)
+  const {showModal,setShowModal} = useContext(ModalContxt)
   const [bookingId, setBookingId] = useState(null);
   const axios = useAxios();
   const { id } = useParams();
@@ -49,10 +51,10 @@ export default function CarDetails() {
 
     };
     const result = await axiosInstance.post('/booking', bookingInfo)
+    console.log(result)
      const newBookingId = result.data.insertedId;
       setBookingId(newBookingId);
     setShowModal(true)
-    console.log(result)
     console.log(car._id);
  
 
@@ -158,10 +160,10 @@ export default function CarDetails() {
 
               </form>
               {
-                showModal && <Payment id={bookingId} onClose={() => setShowModal(false)}></Payment>
+                showModal && <Payment id={bookingId} ></Payment>
                 
               }
-
+                {/* onClose={() => setShowModal(false)} */}
 
 
               <div className="flex items-center justify-between text-sm text-text-secondary mt-4">

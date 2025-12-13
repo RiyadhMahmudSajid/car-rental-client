@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaCreditCard, FaMoneyBillWave, FaMobileAlt } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import useAxios from "../Hook/useAxios";
+import { ModalContxt } from "../../Contex/ModalProvider";
 
 
-const Payment = ({ onClose ,id }) => {
-  
+const Payment = ({ id }) => {
+   const {setShowModal} = useContext(ModalContxt)
   console.log(id)
 
   const axiosInstance = useAxios()
@@ -21,7 +22,7 @@ const Payment = ({ onClose ,id }) => {
       <div className="bg-surface w-full max-w-md p-6 rounded-2xl shadow-xl border border-border relative">
 
 
-        <button onClick={onClose} className="absolute top-4 right-4 text-text-secondary hover:text-red-500 transition">
+        <button onClick={() => setShowModal(false)} className="absolute top-4 right-4 text-text-secondary hover:text-red-500 transition">
           <IoClose size={28} />
         </button>
 
