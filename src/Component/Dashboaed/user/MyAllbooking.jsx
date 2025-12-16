@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import useAxios from '../../Hook/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContex } from '../../../Contex/AuthProvider';
@@ -6,17 +6,34 @@ import { ModalContxt } from '../../../Contex/ModalProvider';
 import Payment from '../../Payment/Payment';
 
 const MyAllbooking = () => {
-    const {showModal, setShowModal} = useContext(ModalContxt)
+    const { showModal, setShowModal } = useContext(ModalContxt)
+    const [selectedBookingId, setSelectedBookingId] = useState(null);
     const { user } = useContext(AuthContex);
     const axiosInstance = useAxios();
 
-    const { data: bookings = [] } = useQuery({
+    const { data: bookings = [], refetch} = useQuery({
         queryKey: ['my-booking'],
         queryFn: async () => {
             const result = await axiosInstance.get(`/my-booking?email=${user.email}`);
+            // console.log("result is", result)
+            console.log(result.bookings)
+            console.log(result.data)
             return result.data;
         }
     });
+    console.log("booking is", bookings);
+
+
+    const handleId = (id) => {
+        setSelectedBookingId(id); 
+    };
+
+    const handleDelete = async(id)=>{
+        const result = await axiosInstance.delete(`/mybooking-cancle/${id}?email=${user.email}`) 
+        refetch()
+        console.log("delete ",result)
+    }
+     
 
     // if (isLoading) {
     //     return <p className="text-center text-lg py-10">Loading...</p>;
@@ -43,13 +60,13 @@ const MyAllbooking = () => {
 
                     <tbody>
                         {bookings.map((booking) => (
-                            <tr 
+                            <tr
                                 key={booking._id}
                                 className="border-b hover:bg-gray-50 transition"
                             >
                                 {/* Image */}
                                 <td className="p-4">
-                                    <img 
+                                    <img
                                         src={booking.car.image}
                                         alt={booking.car.name}
                                         className="w-20 h-14 object-cover rounded-md border"
@@ -75,11 +92,10 @@ const MyAllbooking = () => {
                                 <td className="p-4">
                                     <span
                                         className={`px-3 py-1 text-xs font-semibold rounded-full 
-                                        ${
-                                            booking.paymentStatus === "paid"
+                                        ${booking.paymentStatus === "paid"
                                                 ? "bg-green-100 text-green-700"
                                                 : "bg-yellow-100 text-yellow-700"
-                                        }`}
+                                            }`}
                                     >
                                         {booking.paymentStatus}
                                     </span>
@@ -95,20 +111,21 @@ const MyAllbooking = () => {
                                 {/* Action Buttons */}
                                 <td className="p-4 text-center flex gap-2 justify-center">
                                     {booking.paymentStatus === "pending" && (
-                                        <button type='button' onClick={()=> setShowModal(true)} className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+                                        <button type='button' onClick={() => { setShowModal(true); handleId(booking._id); }} className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
                                             Pay
                                         </button>
                                     )}
-                                    {
-                                        showModal && <Payment  ></Payment>
 
-                                    }
-                                    <button className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition">
+                                    <button type='button' onClick={()=>handleDelete(booking._id)} className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition">
                                         Cancel
                                     </button>
                                 </td>
                             </tr>
                         ))}
+                        {
+                            showModal && <Payment id={selectedBookingId} refetch={refetch}  ></Payment>
+
+                        }
                     </tbody>
 
                 </table>

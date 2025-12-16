@@ -5,15 +5,20 @@ import useAxios from "../Hook/useAxios";
 import { ModalContxt } from "../../Contex/ModalProvider";
 
 
-const Payment = ({ id }) => {
-   const {setShowModal} = useContext(ModalContxt)
+const Payment = ({ id, refetch }) => {
+  const { setShowModal } = useContext(ModalContxt)
   console.log(id)
 
   const axiosInstance = useAxios()
 
-  const updatePaymentStatus = async()=>{
+  const updatePaymentStatus = async () => {
     const result = await axiosInstance.patch(`/paymentStatus/${id}`)
-    console.log("result is",result)
+    console.log("result is", result)
+    if (result.data.modifiedCount > 0) {
+      setShowModal(false)
+      refetch();
+
+    }
   }
 
   return (
@@ -58,7 +63,7 @@ const Payment = ({ id }) => {
 
             </div>
           </div>
-          <button type="button" onClick={ updatePaymentStatus}  className="w-full bg-primary text-white py-2.5 rounded-xl font-semibold shadow hover:bg-primary/90 transition">
+          <button type="button" onClick={updatePaymentStatus} className="w-full bg-primary text-white py-2.5 rounded-xl font-semibold shadow hover:bg-primary/90 transition">
             Pay Now
           </button>
         </form>
