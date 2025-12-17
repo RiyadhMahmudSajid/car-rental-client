@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthContex } from '../../../Contex/AuthProvider';
 import { ModalContxt } from '../../../Contex/ModalProvider';
 import Payment from '../../Payment/Payment';
+import PaymentSummary from './PaymentSummary';
 
 const MyAllbooking = () => {
     const { showModal, setShowModal } = useContext(ModalContxt)
@@ -109,6 +110,7 @@ const MyAllbooking = () => {
                                 </td> */}
 
                                 {/* Action Buttons */}
+
                                 <td className="p-4 text-center flex gap-2 justify-center">
                                     {booking.paymentStatus === "pending" && (
                                         <button type='button' onClick={() => { setShowModal(true); handleId(booking._id); }} className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
@@ -122,6 +124,7 @@ const MyAllbooking = () => {
                                 </td>
                             </tr>
                         ))}
+                          
                         {
                             showModal && <Payment id={selectedBookingId} refetch={refetch}  ></Payment>
 

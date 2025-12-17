@@ -17,6 +17,7 @@ import MangeBooking from "../Component/Dashboaed/Admin/MAnageBook/MangeBooking";
 import MyBooking from "../Component/MyBooking";
 import Contact from "../Component/Contact";
 import MyAllbooking from "../Component/Dashboaed/user/MyAllbooking";
+import PaymentHistory from "../Component/Dashboaed/user/PaymentHistory";
 
 
 
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard/my-bookings',
         Component:MyAllbooking
+      },
+      {
+        path:'/dashboard/my-payments',
+        Component:PaymentHistory
       }
     ]
   }
