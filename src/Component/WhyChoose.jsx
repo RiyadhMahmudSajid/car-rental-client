@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Contact = () => {
+const WhyChoose = () => {
     return (
         <div>
             <section className="bg-background py-20 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    {/* সেকশন হেডার */}
+               
                     <div className="text-center mb-16">
                         <h2 className="text-primary font-bold tracking-wide uppercase text-sm">Why Choose Us</h2>
                         <p className="mt-2 text-3xl md:text-4xl font-extrabold text-text-base">
@@ -14,10 +14,9 @@ const Contact = () => {
                         <div className="w-20 h-1.5 bg-accent mx-auto mt-4 rounded-full"></div>
                     </div>
 
-                    {/* ফিচার কার্ডস গ্রিড */}
+             
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-                        {/* ফিচার ১ */}
                         <div className="bg-surface p-8 rounded-2xl border border-border hover:border-primary transition-all duration-300 shadow-sm group">
                             <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
                                 <svg className="w-8 h-8 text-primary group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -30,7 +29,7 @@ const Contact = () => {
                             </p>
                         </div>
 
-                        {/* ফিচার ২ */}
+                     
                         <div className="bg-surface p-8 rounded-2xl border border-border hover:border-primary transition-all duration-300 shadow-sm group">
                             <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
                                 <svg className="w-8 h-8 text-primary group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,7 +42,7 @@ const Contact = () => {
                             </p>
                         </div>
 
-                        {/* ফিচার ৩ */}
+                  
                         <div className="bg-surface p-8 rounded-2xl border border-border hover:border-primary transition-all duration-300 shadow-sm group">
                             <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
                                 <svg className="w-8 h-8 text-primary group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +55,7 @@ const Contact = () => {
                             </p>
                         </div>
 
-                        {/* ফিচার ৪ */}
+                       
                         <div className="bg-surface p-8 rounded-2xl border border-border hover:border-primary transition-all duration-300 shadow-sm group">
                             <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
                                 <svg className="w-8 h-8 text-primary group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,4 +75,4 @@ const Contact = () => {
     );
 };
 
-export default Contact;
+export default WhyChoose;

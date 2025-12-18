@@ -18,6 +18,10 @@ import MyBooking from "../Component/MyBooking";
 import Contact from "../Component/Contact";
 import MyAllbooking from "../Component/Dashboaed/user/MyAllbooking";
 import PaymentHistory from "../Component/Dashboaed/user/PaymentHistory";
+import { Component } from "react";
+import UserOverview from "../Component/Dashboaed/user/overview/UserOverview";
+import Alluser from "../Component/Dashboaed/Admin/Alluser";
+import UserReview from "../Component/Dashboaed/user/UserReview";
 
 
 
@@ -93,6 +97,14 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard/my-payments',
         Component:PaymentHistory
+      },
+      {
+        path:'/dashboard/users',
+        Component:Alluser
+      },
+      {
+        path:'/dashboard/my-reviews',
+        Component:UserReview
       }
     ]
   }
