@@ -4,6 +4,8 @@ import Featured from '../../Featured';
 import QualityFeatured from '../../QualityFeatured';
 import Footer from '../../Footer';
 import WhyChoose from '../../WhyChoose';
+import HowItWork from '../../HowItWork';
+import Testomonial from '../../Testomonial';
 
 
 const Home = () => {
@@ -13,6 +15,8 @@ const Home = () => {
            <Featured></Featured>
            <QualityFeatured></QualityFeatured>
            <WhyChoose></WhyChoose>
+           <HowItWork></HowItWork>
+           <Testomonial></Testomonial>
         </div>
     );
 };

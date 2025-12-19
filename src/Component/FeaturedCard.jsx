@@ -2,7 +2,7 @@ import React from "react";
 import { FaGasPump, FaMapMarkerAlt, FaUserFriends } from "react-icons/fa";
 import { GiGearStickPattern } from "react-icons/gi";
 import { Link } from "react-router";
-
+import { motion } from "motion/react";
 const FeaturedCard = ({ car }) => {
     const {
         _id,
@@ -23,11 +23,16 @@ const FeaturedCard = ({ car }) => {
 
 
         <Link to={`carDetails/${_id}`}>
-            <div className="bg-surface rounded-2xl overflow-hidden shadow-xl ">
+            <motion.div
+                whileHover={{ y: -8, scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 100 }}
+                className="bg-surface rounded-2xl overflow-hidden shadow-xl ">
 
                 <div className="relative">
                     {
-                        image && (<img
+                        image && (<motion.img
+                            whileHover={{ scale: 1.1 }}
+                            transition={{ duration: 0.3 }}
                             src={image}
                             alt={name}
                             className="w-full h-56 object-cover"
@@ -86,7 +91,7 @@ const FeaturedCard = ({ car }) => {
 
 
                 </div>
-            </div>
+            </motion.div>
         </Link>
     );
 };

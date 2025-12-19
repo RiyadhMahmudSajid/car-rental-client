@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import useAxios from './Hook/useAxios';
 import AllCarsCard from './AllCarsCard';
-
+import { motion } from "motion/react";
 
 const AllCars = () => {
     const axiosInstance = useAxios()
@@ -27,24 +27,65 @@ const AllCars = () => {
         )
         : cars;
     return (
-        <div className='bg-background'>
-            <div className='text-center max-w-3xl mx-auto py-20 bg-border'>
-                <h2 className="font-semibold text-4xl md:text-[40px] dark:text-white">Available Cars</h2>
-                <p className='text-sm md:text-base text-text-secondary mt-2 max-w-140 mx-auto'>Browse our selection of premium vehicles available for your next adventure</p>
+        <div className='bg-background min-h-screen pb-20 transition-colors duration-300'>
 
-                <input
-                    type="text"
-                    placeholder="Search cars by name, brand, or type..."
-                    className="  mx-auto bg-white px-4 mt-6 max-w-140 w-full h-12 rounded-full shadow focus:outline-none focus:ring-2 focus:ring-primary"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                
-                />
+            <div className='bg-surface border-b border-border'>
+                <div className='text-center max-w-4xl mx-auto py-16 px-6'>
+                    <motion.h2
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.6 }}
+                        className="font-bold text-4xl md:text-5xl text-text-base tracking-tight">
+                        Available Cars
+                    </motion.h2>
+                    <motion.p
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+
+                        className='text-sm md:text-lg text-text-secondary mt-4 max-w-2xl mx-auto leading-relaxed'>
+                        Browse our selection of premium vehicles available for your next adventure.
+                        Quality guaranteed for every mile.
+                    </motion.p>
+
+
+                    <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.6 }}
+                        className='relative max-w-2xl mx-auto mt-10 group'>
+                        <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                            <svg className="h-5 w-5 text-text-secondary group-focus-within:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="Search cars by name, brand, or type..."
+                            className="w-full h-14 pl-12 pr-6 bg-background border border-border rounded-2xl shadow-sm text-text-base placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </motion.div>
+                </div>
             </div>
-            <div className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 lg:gap-8 w-4/5 mx-auto '>
-                {
-                    filteredCars?.map((car) => <AllCarsCard key={car._id} data={car}></AllCarsCard>)
-                }
+            <div className='mt-12 w-[90%] lg:w-4/5 mx-auto'>
+
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 justify-items-center'>
+                    {
+                        filteredCars?.length > 0 ? (
+                            filteredCars.map((car) => (
+                                <div key={car._id} className="w-full h-full transform hover:-translate-y-1 transition-transform duration-300">
+                                    <AllCarsCard data={car} />
+                                </div>
+                            ))
+                        ) : (
+                            <div className="col-span-full py-20 text-center">
+                                <p className="text-text-secondary text-lg italic">No cars found matching your search criteria.</p>
+                            </div>
+                        )
+                    }
+                </div>
             </div>
         </div>
 
