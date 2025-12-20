@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import useAxios from './Hook/useAxios';
 import AllCarsCard from './AllCarsCard';
 import { motion } from "motion/react";
+import Loading from './Loading/Loading';
 
 const AllCars = () => {
     const axiosInstance = useAxios()
@@ -16,7 +17,7 @@ const AllCars = () => {
 
     })
     if (isPending) {
-        return <span>Loading...</span>
+        return <Loading></Loading>
     }
     const filteredCars = search
         ? cars.filter(
@@ -27,9 +28,9 @@ const AllCars = () => {
         )
         : cars;
     return (
-        <div className='bg-background min-h-screen pb-20 transition-colors duration-300'>
+        <div className='bg-background min-h-screen pb-20 transition-colors duration-300 '>
 
-            <div className='bg-surface border-b border-border'>
+            <div className='bg-surface border-b border-border '>
                 <div className='text-center max-w-4xl mx-auto py-16 px-6'>
                     <motion.h2
                         initial={{ y: 20, opacity: 0 }}
@@ -69,15 +70,20 @@ const AllCars = () => {
                     </motion.div>
                 </div>
             </div>
-            <div className='mt-12 w-[90%] lg:w-4/5 mx-auto'>
+            <div className='mt-12 w-[90%] lg:w-4/5 mx-auto ]'>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 justify-items-center'>
                     {
                         filteredCars?.length > 0 ? (
-                            filteredCars.map((car) => (
-                                <div key={car._id} className="w-full h-full transform hover:-translate-y-1 transition-transform duration-300">
+                            filteredCars.map((car,index) => (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 40 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.4, delay: index * 0.2 }}
+                                    viewport={{ once: true }}
+                                    key={car._id} className="w-full h-full ">
                                     <AllCarsCard data={car} />
-                                </div>
+                                </motion.div>
                             ))
                         ) : (
                             <div className="col-span-full py-20 text-center">

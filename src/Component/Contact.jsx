@@ -1,24 +1,38 @@
 import React from 'react';
-
+import { motion } from "motion/react";
 const Contact = () => {
     return (
         <div className="bg-background min-h-screen py-12 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
-              
+
                 <div className="text-center mb-16">
-                    <h2 className="text-primary font-bold tracking-wide uppercase text-sm">Contact Us</h2>
-                    <h1 className="mt-2 text-4xl font-extrabold text-text-base sm:text-5xl">
+                    <motion.h2
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{  duration: 0.6 }}
+                        className="text-primary font-bold tracking-wide uppercase text-sm">Contact Us</motion.h2>
+                    <motion.h1
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{  duration: 0.6 , delay: 0.3 }}
+
+                        className="mt-2 text-4xl font-extrabold text-text-base sm:text-5xl">
                         Get In Touch With Us
-                    </h1>
-                    <p className="mt-4 text-lg text-text-secondary max-w-2xl mx-auto">
+                    </motion.h1>
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.5 }}
+
+                        className="mt-4 text-lg text-text-secondary max-w-2xl mx-auto">
                         Have questions about our fleet or booking process? Our team is here to help you 24/7.
-                    </p>
+                    </motion.p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
-                 
+
                     <div className="space-y-6">
                         <div className="bg-surface p-6 rounded-2xl border border-border flex items-start gap-4">
                             <div className="bg-primary/10 p-3 rounded-lg text-primary">

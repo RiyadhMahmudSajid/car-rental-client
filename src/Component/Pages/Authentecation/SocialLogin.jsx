@@ -1,14 +1,17 @@
 import React, { useContext } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { AuthContex } from '../../../Contex/AuthProvider';
+import toast from 'react-hot-toast';
 
 const SocialLogin = () => {
     const {  googleLogin } = useContext(AuthContex)
     const handleGoogleSignIn = () => {
              googleLogin().then((result) => {
                  const user = result.user;
+                 toast.success("Log in successful")
                  console.log(user)
             }).catch((error) => {
+                toast.error("Can not login")
                  console.log(error)
             })
     }

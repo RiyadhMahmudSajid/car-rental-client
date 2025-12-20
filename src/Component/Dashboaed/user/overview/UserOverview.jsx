@@ -36,6 +36,7 @@ const UserOverview = () => {
     return acc;
   }, {});
   const barData = Object.keys(carCounts).map(name => ({ name, bookingCount: carCounts[name] }));
+  console.log("Bar Data",barData);
   const paidCount = bookings.filter(b => b.paymentStatus === "paid").length;
   const pendingCount = bookings.filter(b => b.paymentStatus === "pending").length;
   const pieData = [{ name: "Paid", value: paidCount }, { name: "Pending", value: pendingCount }];

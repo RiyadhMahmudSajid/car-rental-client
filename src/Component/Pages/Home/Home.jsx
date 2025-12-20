@@ -6,6 +6,7 @@ import Footer from '../../Footer';
 import WhyChoose from '../../WhyChoose';
 import HowItWork from '../../HowItWork';
 import Testomonial from '../../Testomonial';
+import CarFleetCTA from '../../CarFleetCTA';
 
 
 const Home = () => {
@@ -16,6 +17,8 @@ const Home = () => {
            <QualityFeatured></QualityFeatured>
            <WhyChoose></WhyChoose>
            <HowItWork></HowItWork>
+           <CarFleetCTA></CarFleetCTA>
+
            <Testomonial></Testomonial>
         </div>
     );

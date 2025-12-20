@@ -4,135 +4,152 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthContex } from '../../../Contex/AuthProvider';
 import { ModalContxt } from '../../../Contex/ModalProvider';
 import Payment from '../../Payment/Payment';
-import PaymentSummary from './PaymentSummary';
+import { FaCalendarAlt, FaCreditCard, FaTrashAlt, FaCar } from 'react-icons/fa';
 
 const MyAllbooking = () => {
-    const { showModal, setShowModal } = useContext(ModalContxt)
+    const { showModal, setShowModal } = useContext(ModalContxt);
     const [selectedBookingId, setSelectedBookingId] = useState(null);
     const { user } = useContext(AuthContex);
     const axiosInstance = useAxios();
 
-    const { data: bookings = [], refetch} = useQuery({
-        queryKey: ['my-booking'],
+    const { data: bookings = [], refetch, isLoading } = useQuery({
+        queryKey: ['my-booking', user?.email],
         queryFn: async () => {
             const result = await axiosInstance.get(`/my-booking?email=${user.email}`);
-            // console.log("result is", result)
-            console.log(result.bookings)
-            console.log(result.data)
             return result.data;
         }
     });
-    console.log("booking is", bookings);
-
 
     const handleId = (id) => {
-        setSelectedBookingId(id); 
+        setSelectedBookingId(id);
     };
 
-    const handleDelete = async(id)=>{
-        const result = await axiosInstance.delete(`/mybooking-cancle/${id}?email=${user.email}`) 
-        refetch()
-        console.log("delete ",result)
-    }
+    const handleDelete = async (id) => {
      
+        const result = await axiosInstance.delete(`/mybooking-cancle/${id}?email=${user.email}`);
+        refetch();
+    };
 
-    // if (isLoading) {
-    //     return <p className="text-center text-lg py-10">Loading...</p>;
-    // }
+    if (isLoading) return <div className="text-center py-20 text-primary animate-pulse font-bold">Loading your adventure...</div>;
 
     return (
-        <div className="p-6">
-            <h1 className="text-3xl font-bold mb-6">My Bookings</h1>
-
-            <div className="overflow-x-auto shadow-lg rounded-xl border border-gray-200">
-                <table className="w-full text-left">
-                    <thead className="bg-primary text-white">
-                        <tr>
-                            <th className="p-4">Image</th>
-                            <th className="p-4">Car</th>
-                            <th className="p-4">Pickup</th>
-                            <th className="p-4">Return</th>
-                            <th className="p-4">Price/Day</th>
-                            <th className="p-4">Payment</th>
-                            {/* <th className="p-4">Status</th> */}
-                            <th className="p-4 text-center">Actions</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {bookings.map((booking) => (
-                            <tr
-                                key={booking._id}
-                                className="border-b hover:bg-gray-50 transition"
-                            >
-                                {/* Image */}
-                                <td className="p-4">
-                                    <img
-                                        src={booking.car.image}
-                                        alt={booking.car.name}
-                                        className="w-20 h-14 object-cover rounded-md border"
-                                    />
-                                </td>
-
-                                {/* Car Info */}
-                                <td className="p-4">
-                                    <p className="font-semibold">{booking.car.name}</p>
-                                    <p className="text-sm text-gray-500">{booking.car.brand}</p>
-                                </td>
-
-                                {/* Dates */}
-                                <td className="p-4">{booking.pickupDate}</td>
-                                <td className="p-4">{booking.returnDate}</td>
-
-                                {/* Price */}
-                                <td className="p-4 font-semibold">
-                                    ${booking.car.pricePerDay}
-                                </td>
-
-                                {/* Payment Status */}
-                                <td className="p-4">
-                                    <span
-                                        className={`px-3 py-1 text-xs font-semibold rounded-full 
-                                        ${booking.paymentStatus === "paid"
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-yellow-100 text-yellow-700"
-                                            }`}
-                                    >
-                                        {booking.paymentStatus}
-                                    </span>
-                                </td>
-
-                                {/* Booking Status */}
-                                {/* <td className="p-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
-                                        {booking.status || "pending"}
-                                    </span>
-                                </td> */}
-
-                                {/* Action Buttons */}
-
-                                <td className="p-4 text-center flex gap-2 justify-center">
-                                    {booking.paymentStatus === "pending" && (
-                                        <button type='button' onClick={() => { setShowModal(true); handleId(booking._id); }} className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
-                                            Pay
-                                        </button>
-                                    )}
-
-                                    <button type='button' onClick={()=>handleDelete(booking._id)} className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition">
-                                        Cancel
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                          
-                        {
-                            showModal && <Payment id={selectedBookingId} refetch={refetch}  ></Payment>
-
-                        }
-                    </tbody>
-
-                </table>
+        <div className="bg-background min-h-screen p-4 md:p-8 transition-colors duration-300">
+          
+            <div className="max-w-7xl mx-auto mb-10">
+                <h1 className="text-3xl md:text-4xl font-extrabold text-text-base flex items-center gap-3">
+                    <FaCar className="text-primary" /> My Bookings
+                </h1>
+                <p className="text-text-secondary mt-2">Manage your current and upcoming vehicle rentals</p>
             </div>
+
+          
+            <div className="max-w-7xl mx-auto bg-surface rounded-3xl border border-border shadow-xl overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="bg-primary/5 border-b border-border">
+                                <th className="p-5 text-sm font-bold text-text-base uppercase tracking-wider">Vehicle</th>
+                                <th className="p-5 text-sm font-bold text-text-base uppercase tracking-wider">Duration</th>
+                                <th className="p-5 text-sm font-bold text-text-base uppercase tracking-wider">Total Price</th>
+                                <th className="p-5 text-sm font-bold text-text-base uppercase tracking-wider">Status</th>
+                                <th className="p-5 text-sm font-bold text-text-base uppercase tracking-wider text-center">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody className="divide-y divide-border/50">
+                            {bookings.map((booking) => (
+                                <tr key={booking._id} className="hover:bg-primary/5 transition-colors group">
+                               
+                                    <td className="p-5">
+                                        <div className="flex items-center gap-4">
+                                            <div className="relative overflow-hidden rounded-2xl w-24 h-16 md:w-32 md:h-20 shadow-sm border border-border">
+                                                <img
+                                                    src={booking.car.image}
+                                                    alt={booking.car.name}
+                                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-text-base text-lg leading-tight">{booking.car.name}</h3>
+                                                <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-md uppercase mt-1 inline-block">
+                                                    {booking.car.brand}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                 
+                                    <td className="p-5">
+                                        <div className="flex flex-col gap-1 text-sm text-text-secondary font-medium">
+                                            <div className="flex items-center gap-2">
+                                                <FaCalendarAlt className="text-primary text-xs" />
+                                                <span>{booking.pickupDate}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 italic opacity-70">
+                                                to {booking.returnDate}
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                  
+                                    <td className="p-5">
+                                        <div className="text-lg font-bold text-text-base">
+                                            ${booking.car.pricePerDay}
+                                            <span className="text-xs text-text-secondary font-normal ml-1">/day</span>
+                                        </div>
+                                    </td>
+
+                                  
+                                    <td className="p-5">
+                                        <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border shadow-sm
+                                            ${booking.paymentStatus === "paid"
+                                                ? "bg-green-500/10 text-green-600 border-green-200"
+                                                : "bg-amber-500/10 text-amber-600 border-amber-200"
+                                            }`}>
+                                            <span className={`w-2 h-2 rounded-full mr-2 ${booking.paymentStatus === "paid" ? "bg-green-500" : "bg-amber-500"}`}></span>
+                                            {booking.paymentStatus}
+                                        </span>
+                                    </td>
+
+                                  
+                                    <td className="p-5">
+                                        <div className="flex gap-3 justify-center">
+                                            {booking.paymentStatus === "pending" && (
+                                                <button
+                                                    onClick={() => { setShowModal(true); handleId(booking._id); }}
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all active:scale-95"
+                                                >
+                                                    <FaCreditCard className="text-xs" /> Pay Now
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={() => handleDelete(booking._id)}
+                                                className="p-2.5 text-red-500 hover:bg-red-50 rounded-xl border border-transparent hover:border-red-100 transition-all group/btn"
+                                                title="Cancel Booking"
+                                            >
+                                                <FaTrashAlt className="group-hover/btn:scale-110 transition-transform" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+              
+                {bookings.length === 0 && (
+                    <div className="py-20 text-center">
+                        <div className="bg-surface inline-block p-6 rounded-full mb-4">
+                            <FaCar className="text-5xl text-border" />
+                        </div>
+                        <p className="text-text-secondary text-lg">You haven't booked any cars yet.</p>
+                    </div>
+                )}
+            </div>
+
+         
+            {showModal && <Payment id={selectedBookingId} refetch={refetch} />}
         </div>
     );
 };

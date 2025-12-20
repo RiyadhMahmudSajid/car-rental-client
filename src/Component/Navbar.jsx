@@ -8,6 +8,7 @@ import { FiMenu } from 'react-icons/fi';
 import { AuthContex } from '../Contex/AuthProvider';
 import { CgProfile } from 'react-icons/cg';
 import { motion } from "motion/react"
+import toast from 'react-hot-toast';
 const Navbar = () => {
     const { theme, toggleTheme } = useContext(ThemeContext);
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -20,6 +21,7 @@ const Navbar = () => {
         { name: 'Contact', path: '/contact' }
     ];
     const handleLogOut = () => {
+        toast.success("Logout Successful")
         logOut()
     }
 

@@ -1,10 +1,13 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion, scale } from "motion/react";
 import Background from "../assets/herobanner2.webp";
 
 const Hero = () => {
   return (
-    <section
+    <motion.section
+      initial={{ scale: 1.1 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 1.2, ease: 'easeOut' }}
       className="relative text-white py-16 md:py-24 lg:py-32 overflow-hidden"
       style={{
         backgroundImage: `url(${Background})`,
@@ -22,23 +25,23 @@ const Hero = () => {
         viewport={true}
         className="relative max-w-7xl mx-auto px-6 flex flex-col items-center text-center"
       >
-   
+
         <motion.p
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.4 }}
-           viewport={true}
+          viewport={true}
           className="text-primary font-semibold tracking-wide mb-3 uppercase"
         >
           Premium Car Rentals
         </motion.p>
 
-   
+
         <motion.h1
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-           viewport={true}
+          viewport={true}
           className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6"
         >
           Drive Your <span className="text-primary">Dreams</span>
@@ -48,7 +51,7 @@ const Hero = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-           viewport={true}
+          viewport={true}
           className="text-gray-200 text-base sm:text-lg md:text-xl max-w-2xl mb-8"
         >
           Experience luxury and freedom with our handpicked collection of premium vehicles.
@@ -59,13 +62,13 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-           viewport={true}
+          viewport={true}
           className="flex flex-col sm:flex-row gap-4 mb-12"
         >
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-             viewport={true}
+            viewport={true}
             className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-lg font-semibold shadow-md"
           >
             Explore Our Fleet
@@ -74,7 +77,7 @@ const Hero = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-             viewport={true}
+            viewport={true}
             className="px-6 py-3 bg-gray-800 rounded-lg font-semibold shadow-md"
           >
             Learn More
@@ -85,7 +88,7 @@ const Hero = () => {
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.5 }}
-           viewport={true}
+          viewport={true}
           className="grid grid-cols-3 gap-6 text-center"
         >
           <div>
@@ -110,7 +113,7 @@ const Hero = () => {
           </div>
         </motion.div>
       </motion.div>
-    </section>
+    </motion.section>
   );
 };
 

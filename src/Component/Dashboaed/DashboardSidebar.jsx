@@ -1,12 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import { AuthContex } from '../../Contex/AuthProvider';
-
-
-import { 
-    FiHome, FiUser, FiLogOut, FiMenu, FiPlusCircle,
-    FiSettings, FiDollarSign, FiStar, FiClipboard
-} from "react-icons/fi";
+import { FiHome, FiUser, FiLogOut, FiMenu, FiPlusCircle, FiSettings, FiDollarSign, FiStar, FiClipboard } from "react-icons/fi";
 import { BsCarFrontFill } from "react-icons/bs";
 import { IoCloseSharp } from 'react-icons/io5';
 import { FaHome } from 'react-icons/fa';
@@ -16,8 +11,9 @@ const DashboardSidebar = () => {
 
     const { logOut } = useContext(AuthContex);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const navigate = useNavigate()
 
-    const { role, isLoading } = useUserRole(); 
+    const { role, isLoading } = useUserRole();
     console.log(role)
 
     if (isLoading) {
@@ -28,7 +24,7 @@ const DashboardSidebar = () => {
         );
     }
 
-   
+
     const adminLinks = [
         { to: "/dashboard", icon: FiHome, label: "Overview" },
         { to: "/dashboard/manage-car", icon: BsCarFrontFill, label: "Manage Cars" },
@@ -46,17 +42,26 @@ const DashboardSidebar = () => {
         { to: "/dashboard/my-bookings", icon: FiClipboard, label: "My Bookings" },
         { to: "/dashboard/my-payments", icon: FiDollarSign, label: "My Payments" },
         { to: "/dashboard/my-reviews", icon: FiStar, label: "My Reviews" },
-        { to: "/dashboard/settings", icon: FiSettings, label: "Settings" },
+        { to: "/dashboard/my-profile", icon: FiSettings, label: "Settings" },
+
     ];
-     
- 
-    
+
+
+
     let navLinks = role === "Admin" ? adminLinks : userLinks;
     console.log(navLinks)
+    const handleLogOut = async () => {
+        try {
+            await logOut();
+            navigate('/');
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
 
     return (
         <>
-            
+
             <button
                 onClick={() => setSidebarOpen(true)}
                 className="fixed top-4 left-4 z-40 p-3 bg-surface border rounded-lg shadow-lg hover:bg-border transition lg:hidden"
@@ -80,7 +85,7 @@ const DashboardSidebar = () => {
                     ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
                 `}
             >
-              
+
                 <div className="flex justify-between items-center mb-10">
                     <h1 className="text-3xl font-extrabold text-primary tracking-tight">
                         Dashboard
@@ -95,7 +100,7 @@ const DashboardSidebar = () => {
                 </div>
 
                 <nav className="flex flex-col gap-2">
-                    {navLinks .map((link) => (
+                    {navLinks.map((link) => (
                         <NavLink
                             key={link.to}
                             to={link.to}
@@ -114,10 +119,10 @@ const DashboardSidebar = () => {
                             {link.label}
                         </NavLink>
                     ))}
-                    
+
                 </nav>
 
-           
+
                 <div className="mt-auto pt-6 border-t border-border ">
                     <Link
                         to='/'
@@ -129,7 +134,7 @@ const DashboardSidebar = () => {
                     </Link>
 
                     <button
-                        onClick={logOut}
+                        onClick={handleLogOut}
                         className="flex items-center gap-3 w-full px-4 py-3 bg-red-500 
                         text-white font-semibold rounded-xl hover:bg-red-600 
                         transition shadow"

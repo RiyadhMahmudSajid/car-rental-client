@@ -5,7 +5,7 @@ import { AuthContex } from '../../../Contex/AuthProvider';
 import SocialLogin from './SocialLogin';
 import useAxios from '../../Hook/useAxios';
 import axios from 'axios';
-
+import toast from 'react-hot-toast';
 const Register = () => {
     const { createUser, upDateUser } = useContext(AuthContex);
     const axiosInstance = useAxios();
@@ -51,9 +51,12 @@ const Register = () => {
             };
             const res = await axiosInstance.post("/user", userInfo);
             console.log("Saved to DB:", res.data);
+            toast.success("Account created successfully")
+            
 
         } catch (error) {
             console.error("Registration Error:", error);
+             toast.error("Registration failed")
         }
     };
 

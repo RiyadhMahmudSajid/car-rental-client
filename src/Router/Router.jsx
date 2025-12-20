@@ -22,6 +22,9 @@ import { Component } from "react";
 import UserOverview from "../Component/Dashboaed/user/overview/UserOverview";
 import Alluser from "../Component/Dashboaed/Admin/Alluser";
 import UserReview from "../Component/Dashboaed/user/UserReview";
+import UpdateProfile from "../Component/Dashboaed/user/Profile/UpdateProfile";
+import Settings from "../Component/Dashboaed/Admin/Settings/Settings";
+
 
 
 
@@ -105,6 +108,14 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard/my-reviews',
         Component:UserReview
+      },
+      {
+        path:'/dashboard/my-profile',
+        Component:UpdateProfile
+      },
+      {
+        path:'/dashboard/settings',
+        Component:Settings
       }
     ]
   }

@@ -4,6 +4,7 @@ import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import { AuthContex } from '../../../Contex/AuthProvider';
 import SocialLogin from './SocialLogin';
 import { useLocation, useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const [show, setShow] = useState(false)
@@ -23,6 +24,7 @@ const Login = () => {
     const onSubmit =async(data) => {
         console.log("Login Data:", data);
         await signInUser(data.email,data.password)
+        toast.success("Login successful")
         navigate(`${location.state?location.state : '/'}`)
 
     };
