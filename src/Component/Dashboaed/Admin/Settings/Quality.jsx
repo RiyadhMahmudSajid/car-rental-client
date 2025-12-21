@@ -2,10 +2,13 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCloudUploadAlt, FaHeading, FaTextHeight, FaCheckCircle } from "react-icons/fa";
+import useAxios from "../../../Hook/useAxios";
+import toast from "react-hot-toast";
 
 
 const Quality = () => {
     const [loading, setLoading] = useState(false);
+    const axiosInstance = useAxios()
     const {
         register,
         handleSubmit,
@@ -26,6 +29,7 @@ const Quality = () => {
             );
 
             const imageUrl = res.data.data.display_url;
+            console.log(imageUrl);
 
             const qualityData = {
                 title: data.title,
@@ -38,13 +42,26 @@ const Quality = () => {
             };
 
             console.log("Final Quality Data:", qualityData);
-            
-           
+
+
+            const result = axiosInstance.post('/qualityData',qualityData)
+
+            console.log(result);
+            if(result.data.insertedId){
+
+                toast.success('Quality data is send')
+            }
+            else{
+                toast.error('Quality data cannot send')
+            }
+
+
             reset();
 
         } catch (error) {
             console.error("Upload failed", error);
-           
+            toast.error('From can not submit')
+
         } finally {
             setLoading(false);
         }
@@ -53,7 +70,7 @@ const Quality = () => {
     return (
         <div className="min-h-screen bg-background p-4 md:p-10">
             <div className="max-w-6xl mx-auto bg-surface rounded-[2rem] shadow-xl border border-border overflow-hidden">
-               
+
                 <div className="bg-primary p-8 text-white">
                     <h2 className="text-3xl font-bold flex items-center gap-3">
                         <FaCheckCircle className="text-accent" /> Create Quality Section
@@ -62,10 +79,10 @@ const Quality = () => {
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-8">
-                    
-                
+
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      
+
                         <div className="space-y-4">
                             <label className="text-sm font-bold text-text-base flex items-center gap-2">
                                 <FaHeading className="text-primary" /> Main Section Title
@@ -79,7 +96,7 @@ const Quality = () => {
                             {errors.title && <p className="text-error text-xs ml-2">{errors.title.message}</p>}
                         </div>
 
-                      
+
                         <div className="space-y-4">
                             <label className="text-sm font-bold text-text-base flex items-center gap-2">
                                 <FaCloudUploadAlt className="text-primary text-lg" /> Feature Image
@@ -102,27 +119,27 @@ const Quality = () => {
 
                     <hr className="border-border" />
 
-                  
+
                     <div className="space-y-6">
                         <h3 className="text-lg font-bold text-text-base border-l-4 border-accent pl-3">Sub-features & Descriptions</h3>
-                        
+
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                           
-                            <div className="p-5 bg-background rounded-2xl border border-border space-y-3">
-                                <input {...register("subtitle1", {required: true})} placeholder="Subtitle 1" className="w-full font-bold bg-transparent outline-none border-b border-border focus:border-primary pb-1" />
-                                <textarea {...register("p1forsub1", {required: true})} placeholder="Description 1" rows="3" className="w-full text-sm bg-transparent outline-none resize-none" />
-                            </div>
 
-                           
                             <div className="p-5 bg-background rounded-2xl border border-border space-y-3">
-                                <input {...register("subtitle2", {required: true})} placeholder="Subtitle 2" className="w-full font-bold bg-transparent outline-none border-b border-border focus:border-primary pb-1" />
-                                <textarea {...register("p2forsub2", {required: true})} placeholder="Description 2" rows="3" className="w-full text-sm bg-transparent outline-none resize-none" />
+                                <input {...register("subtitle1", { required: true })} placeholder="Subtitle 1" className="w-full font-bold bg-transparent outline-none border-b border-border focus:border-primary pb-1" />
+                                <textarea {...register("p1forsub1", { required: true })} placeholder="Description 1" rows="3" className="w-full text-sm bg-transparent outline-none resize-none" />
                             </div>
 
 
                             <div className="p-5 bg-background rounded-2xl border border-border space-y-3">
-                                <input {...register("subtitle3", {required: true})} placeholder="Subtitle 3" className="w-full font-bold bg-transparent outline-none border-b border-border focus:border-primary pb-1" />
-                                <textarea {...register("p3forsub3", {required: true})} placeholder="Description 3" rows="3" className="w-full text-sm bg-transparent outline-none resize-none" />
+                                <input {...register("subtitle2", { required: true })} placeholder="Subtitle 2" className="w-full font-bold bg-transparent outline-none border-b border-border focus:border-primary pb-1" />
+                                <textarea {...register("p2forsub2", { required: true })} placeholder="Description 2" rows="3" className="w-full text-sm bg-transparent outline-none resize-none" />
+                            </div>
+
+
+                            <div className="p-5 bg-background rounded-2xl border border-border space-y-3">
+                                <input {...register("subtitle3", { required: true })} placeholder="Subtitle 3" className="w-full font-bold bg-transparent outline-none border-b border-border focus:border-primary pb-1" />
+                                <textarea {...register("p3forsub3", { required: true })} placeholder="Description 3" rows="3" className="w-full text-sm bg-transparent outline-none resize-none" />
                             </div>
                         </div>
                     </div>

@@ -5,24 +5,16 @@ import { FiHome, FiUser, FiLogOut, FiMenu, FiPlusCircle, FiSettings, FiDollarSig
 import { BsCarFrontFill } from "react-icons/bs";
 import { IoCloseSharp } from 'react-icons/io5';
 import { FaHome } from 'react-icons/fa';
-import useUserRole from '../Hook/useUserRole';
 
-const DashboardSidebar = () => {
+import Loading from '../Loading/Loading';
+
+const DashboardSidebar = ({ role }) => {
 
     const { logOut } = useContext(AuthContex);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const navigate = useNavigate()
 
-    const { role, isLoading } = useUserRole();
-    console.log(role)
-
-    if (isLoading) {
-        return (
-            <div className="p-10 text-center font-bold text-primary text-xl">
-                Loading Sidebar...
-            </div>
-        );
-    }
+ 
 
 
     const adminLinks = [
@@ -31,7 +23,6 @@ const DashboardSidebar = () => {
         { to: "/dashboard/add-car", icon: FiPlusCircle, label: "Add Car" },
         { to: "/dashboard/booking", icon: FiClipboard, label: "Bookings" },
         { to: "/dashboard/users", icon: FiUser, label: "Users" },
-        { to: "/dashboard/payments", icon: FiDollarSign, label: "Payments" },
         { to: "/dashboard/reviews", icon: FiStar, label: "Reviews" },
         { to: "/dashboard/settings", icon: FiSettings, label: "Settings" },
     ];
@@ -54,6 +45,7 @@ const DashboardSidebar = () => {
         try {
             await logOut();
             navigate('/');
+            
         } catch (error) {
             console.error("Logout failed:", error);
         }
@@ -87,9 +79,14 @@ const DashboardSidebar = () => {
             >
 
                 <div className="flex justify-between items-center mb-10">
-                    <h1 className="text-3xl font-extrabold text-primary tracking-tight">
-                        Dashboard
-                    </h1>
+                    <div className="flex items-center gap-2">
+                        <div className="w-10 h-10 bg-[var(--color-primary)] rounded-xl flex items-center justify-center text-white font-black text-xl">
+                            C
+                        </div>
+                        <span className="text-2xl font-black text-[var(--color-text-base)] tracking-tight">
+                            Car<span className="text-[var(--color-primary)]">Ease</span>
+                        </span>
+                    </div>
 
                     <button
                         onClick={() => setSidebarOpen(false)}

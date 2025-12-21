@@ -1,6 +1,7 @@
 import React from "react";
 import { FaTrash, FaEye } from "react-icons/fa";
 import useAxios from "../../../Hook/useAxios";
+import toast from "react-hot-toast";
 
 const ManageBookTable = ({ booking, bookibgId, refetch }) => {
     const axiosInstance = useAxios()
@@ -8,7 +9,7 @@ const ManageBookTable = ({ booking, bookibgId, refetch }) => {
         const res = await axiosInstance.delete(`/delete-booking/${bookibgId}`)
         console.log(res)
         if (res.data.deletedCount > 0) {
-            alert("Booking deleted successfully!");
+            toast.success("Booking deleted successfully!");
             refetch();
         }
 

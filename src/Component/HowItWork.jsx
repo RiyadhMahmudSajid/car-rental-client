@@ -28,7 +28,7 @@ const HowItWork = () => {
     ];
 
     return (
-        <section className="bg-surface py-20 border-y border-border overflow-hidden">
+        <section className="bg-surface py-20   overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 text-center">
                 <motion.h2
                     initial={{ opacity: 0, y: 30 }}

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAxios from '../../../Hook/useAxios';
 import ManageBookTable from './ManageBookTable';
+import Loading from '../../../Loading/Loading';
 
 const MangeBooking = () => {
     const axiosInstance = useAxios();
@@ -16,11 +17,7 @@ const MangeBooking = () => {
     });
 
     if (isPending) {
-        return (
-            <div className="flex justify-center items-center h-screen text-text-secondary">
-                Loading bookings...
-            </div>
-        );
+        return <Loading></Loading>
     }
 
     return (

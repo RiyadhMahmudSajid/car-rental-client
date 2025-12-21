@@ -5,10 +5,11 @@ import FeaturedCard from './FeaturedCard';
 import { GoArrowRight } from 'react-icons/go';
 import { Link } from 'react-router';
 import { motion } from "motion/react";
+import Loading from './Loading/Loading';
 const Featured = () => {
 
     const axiosSecure = useAxios()
-    const { data: Cars = [] } = useQuery({
+    const { data: Cars = [],isLoading } = useQuery({
         queryKey: ['allCar'],
         queryFn: async () => {
             const result = await axiosSecure.get('/all-car')
@@ -16,6 +17,9 @@ const Featured = () => {
             return result.data.slice(0, 6)
         }
     })
+    if(isLoading){
+        return <Loading></Loading>
+    }
     return (
         <div className='bg-background py-24'>
             <div

@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { AuthContex } from '../Contex/AuthProvider';
 import Payment from './Payment/Payment';
 import { ModalContxt } from '../Contex/ModalProvider';
+import Loading from './Loading/Loading';
 
 export default function CarDetails() {
   const { showModal, setShowModal } = useContext(ModalContxt);
@@ -72,7 +73,7 @@ export default function CarDetails() {
   };
 
   if (isLoading)
-    return <div className="min-h-[60vh] flex items-center justify-center">Loading...</div>;
+    return <Loading></Loading>
 
   if (isError || !car)
     return <div className="min-h-[60vh] flex items-center justify-center text-red-500">Failed to load car details</div>;

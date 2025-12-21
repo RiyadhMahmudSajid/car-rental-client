@@ -9,7 +9,7 @@ const Footer = () => {
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     
-                    {/* --- 1. BRAND SECTION --- */}
+             
                     <div className="space-y-6">
                         <div className="flex items-center gap-2">
                             <div className="w-10 h-10 bg-[var(--color-primary)] rounded-xl flex items-center justify-center text-white font-black text-xl">

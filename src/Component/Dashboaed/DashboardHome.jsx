@@ -1,17 +1,17 @@
 import React from 'react';
 import UserOverview from './user/overview/UserOverview';
-import useUserRole from '../Hook/useUserRole';
 import AdminOverview from './Admin/Overview/AdminOverview';
+import Loading from '../Loading/Loading';
+import { useOutletContext } from 'react-router';
 
 
 const DashboardHome = () => {
   
- const { role, isLoading } = useUserRole()
+const { role } = useOutletContext();
 
 
-  if(isLoading){
-    <p>loding....</p>
-  }
+
+  if (!role) return null;
 
   return (
     <div>

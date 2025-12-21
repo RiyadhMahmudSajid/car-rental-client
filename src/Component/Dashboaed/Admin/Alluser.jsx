@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import useAxios from '../../Hook/useAxios';
 import { FaTrashAlt, FaUserShield, FaUsers, FaSearch, FaEnvelope } from 'react-icons/fa';
+import Loading from '../../Loading/Loading';
 
 const Alluser = () => {
     const axiosInstance = useAxios();
@@ -24,11 +25,7 @@ const Alluser = () => {
         u.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    if (isLoading) return (
-        <div className="p-10 text-center animate-pulse font-bold text-[var(--color-primary)]">
-            Loading Users...
-        </div>
-    );
+    if (isLoading) return <Loading></Loading>
 
     return (
         <div className="p-6 md:p-10 bg-[var(--color-background)] min-h-screen transition-colors duration-300">

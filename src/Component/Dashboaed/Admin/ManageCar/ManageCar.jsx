@@ -7,6 +7,7 @@ import ManageCarTable from './ManageCarTable';
 import { FiSearch } from "react-icons/fi";
 import { FaListUl, FaRegTimesCircle } from "react-icons/fa";
 import { ImSpinner2 } from "react-icons/im";
+import Loading from '../../../Loading/Loading';
 
 const ManageCar = () => {
     const axiosInstance = useAxios();
@@ -37,12 +38,7 @@ const ManageCar = () => {
     });
 
     if (isPending) {
-        return (
-            <div className="flex justify-center items-center h-screen bg-background text-primary">
-                <ImSpinner2 className="w-10 h-10 animate-spin mr-3" />
-                <p className="text-xl font-semibold">Loading car list...</p>
-            </div>
-        );
+        return <Loading></Loading>
     }
 
     return (

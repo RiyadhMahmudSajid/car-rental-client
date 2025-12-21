@@ -4,6 +4,7 @@ import useAxios from './Hook/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { FaStar, FaUsers, FaGasPump, FaCog, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { motion } from "motion/react";
+import Loading from './Loading/Loading';
 const MyBooking = () => {
     const { user } = useContext(AuthContex);
     const axiosInstance = useAxios();
@@ -17,7 +18,7 @@ const MyBooking = () => {
     });
 
     if (isLoading) {
-        return <div className="min-h-[60vh] flex items-center justify-center text-text-secondary">Loading your bookings...</div>;
+        return <Loading></Loading>
     }
 
     if (bookings.length === 0) {

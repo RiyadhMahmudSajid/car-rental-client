@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import EditCardataModal from "./EditCardataModal";
 import useAxios from "../../../Hook/useAxios";
+import toast from "react-hot-toast";
 
 const ManageCarTable = ({ cars, refetch }) => {
 
@@ -16,10 +17,10 @@ const ManageCarTable = ({ cars, refetch }) => {
         const res = await axiosInstance.delete(`/delete-car/${carId}`);
         console.log(res)
         if (res.data.deletedCount > 0) {
-            alert("Car deleted successfully!");
+            toast.success("Car deleted successfully!");
             refetch(); 
         } else {
-            alert("Failed to delete car!");
+            toast.error("Failed to delete car!");
         }
 
     };
