@@ -79,8 +79,8 @@ export default function CarDetails() {
     return <div className="min-h-[60vh] flex items-center justify-center text-red-500">Failed to load car details</div>;
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-10 bg-background text-text-base">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+    <main className="  px-4 py-10 bg-background text-text-base">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
 
         {/* LEFT */}
         <section className="lg:col-span-2">

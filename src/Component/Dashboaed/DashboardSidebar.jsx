@@ -14,7 +14,7 @@ const DashboardSidebar = ({ role }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const navigate = useNavigate()
 
- 
+
 
 
     const adminLinks = [
@@ -45,7 +45,7 @@ const DashboardSidebar = ({ role }) => {
         try {
             await logOut();
             navigate('/');
-            
+
         } catch (error) {
             console.error("Logout failed:", error);
         }
@@ -101,15 +101,16 @@ const DashboardSidebar = ({ role }) => {
                         <NavLink
                             key={link.to}
                             to={link.to}
+                            end={link.to === "/dashboard"}
                             onClick={() => setSidebarOpen(false)}
                             className={({ isActive }) =>
                                 `
-                                flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition
-                                ${isActive
+    flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition
+    ${isActive
                                     ? "bg-primary text-white shadow-md"
                                     : "hover:bg-border hover:text-primary"
                                 }
-                                `
+    `
                             }
                         >
                             <link.icon className="w-5 h-5" />

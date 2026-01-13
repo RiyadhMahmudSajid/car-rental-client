@@ -2,11 +2,12 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaUser, FaCamera, FaEnvelope, FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
-import useAxios from "../../../Hook/useAxios";
 import { AuthContex } from "../../../../Contex/AuthProvider";
+import useAxios from "../../../Hook/useAxios";
 
 
-const UpdateProfile = () => {
+
+const Profile = () => {
   const { user, upDateUser, setUser } = useContext(AuthContex);
   const axiosInstance = useAxios();
   const [loading, setLoading] = useState(false);
@@ -88,7 +89,7 @@ const UpdateProfile = () => {
 
           <form onSubmit={handleSubmit(onSubmit)} className="p-8 pt-0 relative">
             
-            {/* Avatar Upload Section */}
+      
             <div className="flex flex-col items-center -mt-16 mb-8">
                 <div className="relative group">
                     <div className="w-32 h-32 rounded-[2.5rem] border-4 border-surface shadow-lg overflow-hidden bg-background">
@@ -115,7 +116,7 @@ const UpdateProfile = () => {
             </div>
 
             <div className="space-y-6">
-                {/* Name Input */}
+    
                 <div>
                     <label className="block text-sm font-bold text-text-base mb-2 ml-1">Display Name</label>
                     <div className="relative group">
@@ -130,7 +131,7 @@ const UpdateProfile = () => {
                     {errors.name && <p className="text-error text-xs mt-2 ml-2 font-medium">{errors.name.message}</p>}
                 </div>
 
-                {/* Email Read Only (Security purpose) */}
+
                 <div>
                     <label className="block text-sm font-bold text-text-base mb-2 ml-1">Email Address</label>
                     <div className="relative opacity-60">
@@ -168,4 +169,4 @@ const UpdateProfile = () => {
   );
 };
 
-export default UpdateProfile;
+export default Profile;

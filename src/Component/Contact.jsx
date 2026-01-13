@@ -1,6 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { motion } from "motion/react";
+import { useForm } from 'react-hook-form';
+import { AuthContex } from '../Contex/AuthProvider';
+import useAxios from './Hook/useAxios';
+import { CgKey } from 'react-icons/cg';
+import toast from 'react-hot-toast';
 const Contact = () => {
+    const { user } = useContext(AuthContex)
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const axiosInstance = useAxios()
+    const onSubmit = async (data) => {
+        console.log("Form Data:", data);
+        const messageInfo = {
+            email: data.email,
+            name: data.fullName,
+            message: data.message,
+            subject: data.subject
+
+
+
+        }
+
+        const result = await axiosInstance.post('/message', messageInfo)
+        if (result.data.insertedId) {
+            toast.success("Message sent!");
+        }
+        console.log(result);
+
+
+    };
     return (
         <div className="bg-background min-h-screen py-12 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -10,12 +38,12 @@ const Contact = () => {
                     <motion.h2
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{  duration: 0.6 }}
+                        transition={{ duration: 0.6 }}
                         className="text-primary font-bold tracking-wide uppercase text-sm">Contact Us</motion.h2>
                     <motion.h1
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{  duration: 0.6 , delay: 0.3 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
 
                         className="mt-2 text-4xl font-extrabold text-text-base sm:text-5xl">
                         Get In Touch With Us
@@ -65,44 +93,72 @@ const Contact = () => {
                         </div>
                     </div>
 
-             
+
                     <div className="lg:col-span-2">
-                        <form className="bg-surface p-8 rounded-3xl border border-border shadow-sm space-y-6">
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            className="bg-surface p-8 rounded-3xl border border-border shadow-sm space-y-6"
+                        >
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                                 <div>
                                     <label className="block text-sm font-medium text-text-base mb-2">Full Name</label>
                                     <input
+                                        {...register("fullName", { required: "Full name is required" })}
                                         type="text"
-                                        className="w-full px-4 py-3 rounded-xl border border-border bg-background text-text-base focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+
+                                        defaultValue={user?.displayName}
+                                        className={`w-full px-4 py-3 rounded-xl border ${errors.fullName ? 'border-red-500' : 'border-border'} bg-background text-text-base focus:ring-2 focus:ring-primary focus:outline-none transition-all`}
                                         placeholder="John Doe"
                                     />
+                                    {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
                                 </div>
+
                                 <div>
                                     <label className="block text-sm font-medium text-text-base mb-2">Email Address</label>
                                     <input
+                                        {...register("email", {
+                                            required: "Email is required",
+                                            pattern: {
+                                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                message: "Invalid email address"
+                                            }
+
+                                        })}
+
+                                        defaultValue={user?.email}
                                         type="email"
-                                        className="w-full px-4 py-3 rounded-xl border border-border bg-background text-text-base focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+                                        className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-red-500' : 'border-border'} bg-background text-text-base focus:ring-2 focus:ring-primary focus:outline-none transition-all`}
                                         placeholder="john@example.com"
                                     />
+                                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                                 </div>
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-text-base mb-2">Subject</label>
                                 <input
+                                    {...register("subject", { required: "Subject is required" })}
                                     type="text"
-                                    className="w-full px-4 py-3 rounded-xl border border-border bg-background text-text-base focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+                                    className={`w-full px-4 py-3 rounded-xl border ${errors.subject ? 'border-red-500' : 'border-border'} bg-background text-text-base focus:ring-2 focus:ring-primary focus:outline-none transition-all`}
                                     placeholder="Booking Inquiry"
                                 />
+                                {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject.message}</p>}
                             </div>
+
 
                             <div>
                                 <label className="block text-sm font-medium text-text-base mb-2">Message</label>
                                 <textarea
+                                    {...register("message", {
+                                        required: "Message cannot be empty",
+                                        minLength: { value: 10, message: "Message should be at least 10 characters" }
+                                    })}
                                     rows="4"
-                                    className="w-full px-4 py-3 rounded-xl border border-border bg-background text-text-base focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+                                    className={`w-full px-4 py-3 rounded-xl border ${errors.message ? 'border-red-500' : 'border-border'} bg-background text-text-base focus:ring-2 focus:ring-primary focus:outline-none transition-all`}
                                     placeholder="Write your message here..."
                                 ></textarea>
+                                {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>}
                             </div>
 
                             <button

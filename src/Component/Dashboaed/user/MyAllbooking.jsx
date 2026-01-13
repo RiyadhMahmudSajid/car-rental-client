@@ -5,6 +5,7 @@ import { AuthContex } from '../../../Contex/AuthProvider';
 import { ModalContxt } from '../../../Contex/ModalProvider';
 import Payment from '../../Payment/Payment';
 import { FaCalendarAlt, FaCreditCard, FaTrashAlt, FaCar } from 'react-icons/fa';
+import Loading from '../../Loading/Loading';
 
 const MyAllbooking = () => {
     const { showModal, setShowModal } = useContext(ModalContxt);
@@ -30,7 +31,7 @@ const MyAllbooking = () => {
         refetch();
     };
 
-    if (isLoading) return <div className="text-center py-20 text-primary animate-pulse font-bold">Loading your adventure...</div>;
+    if (isLoading) return <Loading></Loading>
 
     return (
         <div className="bg-background min-h-screen p-4 md:p-8 transition-colors duration-300">

@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import { AuthContex } from '../Contex/AuthProvider';
 import useAxios from './Hook/useAxios';
 import { useQuery } from '@tanstack/react-query';
-import { FaStar, FaUsers, FaGasPump, FaCog, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaStar, FaUsers, FaGasPump, FaCog, FaCalendarAlt, FaMapMarkerAlt  } from 'react-icons/fa';
+import { FaCarRear } from "react-icons/fa6"
 import { motion } from "motion/react";
 import Loading from './Loading/Loading';
+import { Link } from 'react-router';
 const MyBooking = () => {
-    const { user } = useContext(AuthContex);
+    const { user,loading } = useContext(AuthContex);
     const axiosInstance = useAxios();
 
     const { data: bookings = [], isLoading } = useQuery({
@@ -14,16 +16,52 @@ const MyBooking = () => {
         queryFn: async () => {
             const result = await axiosInstance.get(`/my-booking?email=${user.email}`);
             return result.data;
-        }
+        },
+         enabled: !loading && !!user?.email
     });
 
     if (isLoading) {
         return <Loading></Loading>
     }
 
-    if (bookings.length === 0) {
-        return <div className="min-h-[60vh] flex items-center justify-center text-text-secondary">No bookings found.</div>;
-    }
+   if (!isLoading && bookings.length === 0) {
+    return (
+        <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-background">
+            <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="bg-surface p-10 md:p-16 rounded-[3rem] border border-border shadow-xl flex flex-col items-center max-w-lg w-full"
+            >
+              
+                <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 shadow-inner">
+                    <FaCarRear size={45} className="opacity-80" />
+                </div>
+
+                <h2 className="text-2xl md:text-3xl font-black text-text-base mb-3 italic uppercase tracking-tighter">
+                    No Bookings Found!
+                </h2>
+                <p className="text-text-secondary mb-8 leading-relaxed font-medium">
+                    It looks like you haven't booked any cars yet. 
+                    Start your adventure today by exploring our premium fleet!
+                </p>
+
+                <Link
+                    to="/all-car"
+                    className="inline-flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-2xl font-bold text-md hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:scale-105 transition-all duration-300 group"
+                >
+                    Browse Our Fleet
+                    <motion.span
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5 }}
+                    >
+                        →
+                    </motion.span>
+                </Link>
+            </motion.div>
+        </div>
+    );
+}
 
     return (
         <div className='bg-background'>

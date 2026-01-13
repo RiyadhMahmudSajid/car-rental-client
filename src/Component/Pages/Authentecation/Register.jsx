@@ -71,7 +71,7 @@ const Register = () => {
                 </p>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                    {/* Name */}
+              
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium mb-2 text-text-base">
                             Full Name
@@ -89,7 +89,7 @@ const Register = () => {
                         {errors.name && <p className="text-error text-xs mt-1">{errors.name.message}</p>}
                     </div>
 
-                    {/* Email */}
+      
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium mb-2 text-text-base">
                             Email Address
@@ -110,7 +110,6 @@ const Register = () => {
                         {errors.email && <p className="text-error text-xs mt-1">{errors.email.message}</p>}
                     </div>
 
-                    {/* Password */}
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium mb-2 text-text-base">
                             Password
@@ -134,7 +133,7 @@ const Register = () => {
                         {errors.password && <p className="text-error text-xs mt-1">{errors.password.message}</p>}
                     </div>
 
-                    {/* Profile Image */}
+              
                     <div>
                         <label htmlFor="photoURL" className="block text-sm font-medium mb-2 text-text-base">
                             Profile Picture
@@ -150,13 +149,13 @@ const Register = () => {
                         </div>
                     </div>
 
-                    {/* Submit */}
+              
                     <button type="submit" className="w-full py-3 mt-4 bg-primary text-white font-bold rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-300 text-lg">
                         Register Account
                     </button>
                 </form>
 
-                {/* Social Login */}
+               
                 <SocialLogin />
 
                 <p className="text-center mt-6 text-sm text-text-secondary">

@@ -61,7 +61,7 @@ const Alluser = () => {
                                 <th className="px-8 py-5 text-xs font-bold uppercase text-[var(--color-text-secondary)] tracking-wider">Contact</th>
                                 <th className="px-8 py-5 text-xs font-bold uppercase text-[var(--color-text-secondary)] tracking-wider">Access Level</th>
                                 <th className="px-8 py-5 text-xs font-bold uppercase text-[var(--color-text-secondary)] tracking-wider">Joined At</th>
-                                <th className="px-8 py-5 text-xs font-bold uppercase text-[var(--color-text-secondary)] tracking-wider text-right">Actions</th>
+                              
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-[var(--color-border)]">
@@ -110,15 +110,7 @@ const Alluser = () => {
                                         })}
                                     </td>
 
-                                    <td className="px-8 py-5 text-right">
-                                        <button 
-                                            onClick={() => handleDelete(u._id)}
-                                            className="p-3 text-red-500 hover:bg-red-500/10 rounded-2xl transition-all active:scale-95 group/btn"
-                                            title="Delete User"
-                                        >
-                                            <FaTrashAlt className="group-hover/btn:rotate-12 transition-transform" size={18} />
-                                        </button>
-                                    </td>
+                                   
                                 </tr>
                             ))}
                         </tbody>

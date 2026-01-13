@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion, scale } from "motion/react";
 import Background from "../assets/herobanner2.webp";
+import { carContext } from "../Contex/CarsProvider";
+import { useNavigate } from "react-router";
 
 const Hero = () => {
+  const { cars, isLoading } = useContext(carContext)
+  const navigate = useNavigate()
+
   return (
     <motion.section
       initial={{ scale: 1.1 }}
@@ -66,6 +71,7 @@ const Hero = () => {
           className="flex flex-col sm:flex-row gap-4 mb-12"
         >
           <motion.button
+            onClick={()=>navigate('/all-car')}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             viewport={true}
@@ -75,6 +81,7 @@ const Hero = () => {
           </motion.button>
 
           <motion.button
+          onClick={()=>navigate('/LearnMore')}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             viewport={true}
@@ -89,19 +96,12 @@ const Hero = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.5 }}
           viewport={true}
-          className="grid grid-cols-3 gap-6 text-center"
+          className="grid grid-cols-2 gap-3 text-center"
         >
           <div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-primary">1000+</h3>
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary">{cars.length}+</h3>
             <p className="text-gray-300 text-sm sm:text-base">
               Premium Vehicles
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-primary">50k+</h3>
-            <p className="text-gray-300 text-sm sm:text-base">
-              Happy Drivers
             </p>
           </div>
 
@@ -110,7 +110,7 @@ const Hero = () => {
             <p className="text-gray-300 text-sm sm:text-base">
               Support
             </p>
-          </div>
+          </div> 
         </motion.div>
       </motion.div>
     </motion.section>

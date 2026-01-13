@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import useAxios from '../../../Hook/useAxios';
 import ManageCarTable from './ManageCarTable';
 
@@ -8,19 +8,17 @@ import { FiSearch } from "react-icons/fi";
 import { FaListUl, FaRegTimesCircle } from "react-icons/fa";
 import { ImSpinner2 } from "react-icons/im";
 import Loading from '../../../Loading/Loading';
+import { carContext } from '../../../../Contex/CarsProvider';
+
 
 const ManageCar = () => {
     const axiosInstance = useAxios();
     const [search, setSearch] = useState("");
-    const [filterStatus, setFilterStatus] = useState('all');
 
-    const { isPending, data: cars = [], refetch } = useQuery({
-        queryKey: ['all-car'],
-        queryFn: async () => {
-            const result = await axiosInstance.get('/all-car');
-            return result.data;
-        }
-    });
+    const [filterStatus, setFilterStatus] = useState('all');
+      const {cars, isLoading,refetch} = useContext(carContext)
+       
+
 
 
     const filteredAndSearchedCars = cars.filter((car) => {
@@ -37,7 +35,7 @@ const ManageCar = () => {
         return true;
     });
 
-    if (isPending) {
+    if (isLoading) {
         return <Loading></Loading>
     }
 
@@ -53,9 +51,9 @@ const ManageCar = () => {
                     Search, filter, edit, and remove cars.
                 </p>
 
-                {/* Search + Filter */}
+        
                 <div className="flex flex-col md:flex-row gap-4 mt-6">
-                    {/* Search */}
+  
                     <div className="relative w-full">
                         <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary w-5 h-5" />
                         <input

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContex } from '../Contex/AuthProvider';
 import { Navigate } from 'react-router';
 import { useLocation } from 'react-router';
+import Loading from '../Component/Loading/Loading';
 
 const PrivateRoute = ({ children }) => {
 
@@ -11,7 +12,7 @@ const PrivateRoute = ({ children }) => {
     const {user,loading} = useContext(AuthContex)
     
     if(loading){
-        return <p>Loading...</p>
+        return <Loading></Loading>
     }
     if(user){
 

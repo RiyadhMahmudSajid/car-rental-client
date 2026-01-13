@@ -26,6 +26,8 @@ import UpdateProfile from "../Component/Dashboaed/user/Profile/UpdateProfile";
 import Settings from "../Component/Dashboaed/Admin/Settings/Settings";
 import AdminOverview from "../Component/Dashboaed/Admin/Overview/AdminOverview";
 import AdminReview from "../Component/Dashboaed/Admin/AdminReview";
+import NotFound from "../Component/NotFound/NotFound";
+import LearnMore from "../Component/LearnMore/LearnMore";
 
 
 
@@ -47,17 +49,18 @@ export const router = createBrowserRouter([
         path: '/carDetails/:id',
         Component: CardDetails
       },
-      // {
-      //   path: '/payment',
-      //   element: <PrivateRoute><Payment></Payment></PrivateRoute>
-      // },
+
       {
         path: '/my-booking',
         element: <PrivateRoute><MyBooking></MyBooking></PrivateRoute>
       },
       {
-        path:'/contact',
-        Component:Contact
+        path: '/contact',
+        element:<PrivateRoute><Contact></Contact></PrivateRoute>
+      },
+      {
+        path:'/LearnMore',
+        Component:LearnMore
       }
     ]
   },
@@ -96,33 +99,37 @@ export const router = createBrowserRouter([
         Component: MangeBooking
       },
       {
-        path:'/dashboard/my-bookings',
-        Component:MyAllbooking
+        path: '/dashboard/my-bookings',
+        Component: MyAllbooking
       },
       {
-        path:'/dashboard/my-payments',
-        Component:PaymentHistory
+        path: '/dashboard/my-payments',
+        Component: PaymentHistory
       },
       {
-        path:'/dashboard/users',
-        Component:Alluser
+        path: '/dashboard/users',
+        Component: Alluser
       },
       {
-        path:'/dashboard/my-reviews',
-        Component:UserReview
+        path: '/dashboard/my-reviews',
+        Component: UserReview
       },
       {
-        path:'/dashboard/my-profile',
-        Component:UpdateProfile
+        path: '/dashboard/my-profile',
+        Component: UpdateProfile
       },
       {
-        path:'/dashboard/settings',
-        Component:Settings
+        path: '/dashboard/settings',
+        Component: Settings
       },
       {
-        path:'/dashboard/reviews',
-        Component:AdminReview
+        path: '/dashboard/reviews',
+        Component: AdminReview
       }
     ]
+  },
+  {
+    path: '/*',
+    element: <NotFound></NotFound>
   }
 ]);

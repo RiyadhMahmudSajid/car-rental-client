@@ -25,19 +25,35 @@ const PaymentPieChart = () => {
   ];
 
   return (
-    <div className="p-4 bg-white shadow rounded h-80">
-      <h2 className="font-bold mb-3">Payment Status</h2>
+    <div className="p-8 bg-surface border border-border rounded-[2.5rem] shadow-sm h-[450px] relative">
+      <h2 className="text-xl font-black text-text-base mb-2 italic">Payment Status</h2>
+      <p className="text-xs text-text-secondary mb-6 font-medium">Distribution of paid vs pending</p>
 
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
-          <Pie data={pieData} dataKey="value" label>
-            {pieData.map((_, i) => (
-              <Cell key={i} fill={COLORS[i % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
+      <div className="h-full pb-10">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={pieData}
+              innerRadius={80}
+              outerRadius={110}
+              paddingAngle={8}
+              dataKey="value"
+            >
+              {pieData.map((_, i) => (
+                <Cell key={i} fill={COLORS[i % COLORS.length]} stroke="none" />
+              ))}
+            </Pie>
+            <Tooltip
+              contentStyle={{ borderRadius: '15px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center mt-4">
+          <p className="text-[10px] uppercase font-bold text-text-secondary">Overview</p>
+          <p className="text-2xl font-black text-text-base">100%</p>
+        </div>
+      </div>
     </div>
   );
 };

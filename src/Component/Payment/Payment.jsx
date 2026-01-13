@@ -28,8 +28,9 @@ const Payment = ({ id, refetch }) => {
     setIsSubmitting(true);
     try {
       const result = await axiosInstance.patch(`/paymentStatus/${id}`, {
-        paymentMethod: data.payment,
+       
       });
+      console.log(result);
 
       if (result.data.modifiedCount > 0) {
         toast.success("Payment success")
@@ -54,7 +55,7 @@ const Payment = ({ id, refetch }) => {
       
           <button
             onClick={() => setShowModal(false)}
-            className="absolute top-6 right-6 p-2 rounded-full hover:bg-red-50 text-text-secondary hover:text-red-500 transition-all duration-300"
+            className="absolute top-1 right-6 p-2 rounded-full hover:bg-red-50 text-text-secondary hover:text-red-500 transition-all duration-300"
           >
             <IoClose size={24} />
           </button>

@@ -27,15 +27,17 @@ const BookingBarChartA = () => {
   }));
 
   return (
-    <div className="p-4 bg-white shadow rounded h-80">
-      <h2 className="font-bold mb-3">Bookings Per Car</h2>
-
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={barData}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="count" fill="#6366F1" />
+    <div className="p-8 bg-surface border border-border rounded-[2.5rem] shadow-sm h-[450px]">
+      <h2 className="text-xl font-black text-text-base mb-6 italic">Bookings Per Car</h2>
+      <ResponsiveContainer width="100%" height="90%">
+        <BarChart data={barData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+          <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+          <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} />
+          <Tooltip
+            contentStyle={{ borderRadius: '20px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
+            cursor={{ fill: '#f1f5f9' }}
+          />
+          <Bar dataKey="count" fill="#6366F1" radius={[10, 10, 0, 0]} barSize={40} />
         </BarChart>
       </ResponsiveContainer>
     </div>

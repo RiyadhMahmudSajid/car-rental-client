@@ -4,14 +4,7 @@ import { GiGearStickPattern } from "react-icons/gi";
 import { Link } from "react-router";
 import { motion } from "motion/react";
 const FeaturedCard = ({ car }) => {
-    const {
-        _id,
-        name,
-        type,
-        year,
-        seats,
-        fuelType,
-        transmission,
+    const { _id,name, type,year,seats,fuelType,transmission,
         location,
         pricePerDay,
         currency,

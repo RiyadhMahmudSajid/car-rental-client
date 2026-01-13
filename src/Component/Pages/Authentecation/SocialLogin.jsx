@@ -2,18 +2,35 @@ import React, { useContext } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { AuthContex } from '../../../Contex/AuthProvider';
 import toast from 'react-hot-toast';
+import useAxios from '../../Hook/useAxios';
+import { useNavigate } from 'react-router';
 
 const SocialLogin = () => {
-    const {  googleLogin } = useContext(AuthContex)
-    const handleGoogleSignIn = () => {
-             googleLogin().then((result) => {
-                 const user = result.user;
-                 toast.success("Log in successful")
-                 console.log(user)
-            }).catch((error) => {
-                toast.error("Can not login")
-                 console.log(error)
-            })
+    const { googleLogin } = useContext(AuthContex)
+    const axiosInstance = useAxios()
+    const navigate = useNavigate()
+    const handleGoogleSignIn = async () => {
+        try {
+            const result = await googleLogin();
+            const user = result.user;
+
+            const userInfo = {
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL,
+                role: "user",
+                created_at: new Date().toISOString(),
+                last_login: new Date().toISOString()
+            };
+            await axiosInstance.post('/user', userInfo);
+
+            toast.success("Login successful");
+            navigate('/');
+
+        } catch (error) {
+            console.error(error);
+            toast.error("Google login failed");
+        }
     }
 
     return (

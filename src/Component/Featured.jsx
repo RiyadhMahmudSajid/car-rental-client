@@ -1,22 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import useAxios from './Hook/useAxios';
+import React, { useContext } from 'react';
 import FeaturedCard from './FeaturedCard';
 import { GoArrowRight } from 'react-icons/go';
 import { Link } from 'react-router';
 import { motion } from "motion/react";
 import Loading from './Loading/Loading';
+import { carContext } from '../Contex/CarsProvider';
 const Featured = () => {
-
-    const axiosSecure = useAxios()
-    const { data: Cars = [],isLoading } = useQuery({
-        queryKey: ['allCar'],
-        queryFn: async () => {
-            const result = await axiosSecure.get('/all-car')
-            console.log(result.data)
-            return result.data.slice(0, 6)
-        }
-    })
+      const {cars, isLoading} = useContext(carContext)
+   
+    const Cars = cars.slice(0,6)
     if(isLoading){
         return <Loading></Loading>
     }

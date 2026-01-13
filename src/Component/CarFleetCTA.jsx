@@ -45,12 +45,12 @@ const CarFleetCTA = () => {
                             
                             >
                                 <Link
-                                    to="/all-cars"
+                                    to="/all-car"
                                     className="inline-flex items-center gap-3 bg-white dark:bg-primary text-blue-600 dark:text-white px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] dark:hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:scale-105 transition-all duration-300 group"
                                 >
                                     Explore Our Fleet
                                     <FaArrowRight className="group-hover:translate-x-2 transition-transform duration-300" />
-                                </Link>
+                                </Link> 
                             </div>
                         </div>
                     </div>

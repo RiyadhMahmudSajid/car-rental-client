@@ -9,6 +9,7 @@ import AuthProvider from './Contex/AuthProvider'
 import ModalProvider from './Contex/ModalProvider'
 const queryClient = new QueryClient()
 import { Toaster } from "react-hot-toast";
+import CarsProvider from './Contex/CarsProvider'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -25,7 +26,10 @@ createRoot(document.getElementById('root')).render(
                 duration: 1000,
               }}
             />
-            <RouterProvider router={router}></RouterProvider>
+            <CarsProvider>
+              <RouterProvider router={router}></RouterProvider>
+
+            </CarsProvider>
           </ModalProvider>
         </ThemeProvider>
       </QueryClientProvider>

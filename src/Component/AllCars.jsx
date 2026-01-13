@@ -1,22 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import useAxios from './Hook/useAxios';
 import AllCarsCard from './AllCarsCard';
 import { motion } from "motion/react";
 import Loading from './Loading/Loading';
+import { carContext } from '../Contex/CarsProvider';
 
 const AllCars = () => {
-    const axiosInstance = useAxios()
+  
     const [search, setSearch] = useState('');
-    const { isPending, data: cars } = useQuery({
-        queryFn: async () => {
-            const result = await axiosInstance.get('/all-car')
-            console.log(result.data)
-            return result.data
-        },
-
-    })
-    if (isPending) {
+    const {cars, isLoading} = useContext(carContext)
+   
+    if (isLoading) {
         return <Loading></Loading>
     }
     const filteredCars = search
