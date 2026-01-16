@@ -127,8 +127,9 @@ export default function CarDetails() {
                 <input
                   type="date"
                   {...register("pickupDate", { required: true })}
+                  
                   onChange={e => setPickupDate(e.target.value)}
-                  className="w-full border border-border bg-background rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full border border-border bg-background rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:[&::-webkit-calendar-picker-indicator]:invert"
                 />
               </div>
               <div>
@@ -138,12 +139,12 @@ export default function CarDetails() {
                   min={pickupDate}
                   {...register("returnDate", { required: true })}
                   onChange={e => setReturnDate(e.target.value)}
-                  className="w-full  border border-border bg-background rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full  border border-border bg-background rounded-md px-3 py-2  text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:[&::-webkit-calendar-picker-indicator]:invert"
                 />
               </div>
               <div className=''>
                 <label className="block text-sm text-text-secondary mb-1">Area</label>
-                <select className='  w-full border border-border bg-background rounded-lg px-3 py-2.5 text-sm text-text-base' {...register("area", { required: true })}>
+                <select className='  w-full border border-border bg-background rounded-lg px-3 py-2.5  text-sm text-text-base' {...register("area", { required: true })}>
                   <option value="">Select Area</option>
                   <option value="Mirpur">Mirpur</option>
                   <option value="Uttara">Uttara</option>
@@ -155,7 +156,7 @@ export default function CarDetails() {
 
                 {selectedArea === "Other" && (
                   <div className="mt-3">
-                    <label className="block text-sm text-text-secondary mb-1">
+                    <label className="block text-sm text-text-secondary mb-1 ">
                       Enter Your Area
                     </label>
 
@@ -164,7 +165,7 @@ export default function CarDetails() {
                       {...register("customArea", { required: true })}
                       placeholder="Type your area name"
                       className="w-full border border-border bg-background rounded-lg px-3 py-2.5 text-sm
-                   focus:outline-none focus:ring-2 focus:ring-primary"
+                   focus:outline-none focus:ring-2 focus:ring-primary "
                     />
                   </div>
                 )}
@@ -174,7 +175,7 @@ export default function CarDetails() {
                 type="submit"
                 disabled={!user}
                 className={`w-full py-2.5 rounded-lg
-    ${user ? "bg-primary text-white" : "bg-gray-400 cursor-not-allowed"}`}
+    ${user ? "bg-primary text-white cursor-pointer" : "bg-gray-400 cursor-not-allowed"}`}
               >
                 {user ? "Book Now" : "Login to Book"}
               </button>

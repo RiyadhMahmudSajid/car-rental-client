@@ -135,7 +135,7 @@ const Payment = ({ id, refetch }) => {
             <button
               disabled={isSubmitting}
               type="submit"
-              className={`w-full py-4 rounded-2xl font-bold text-white shadow-lg transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 ${paymentMethod === 'card' ? 'bg-primary shadow-primary/20 hover:bg-primary/90' : 'bg-pink-500 shadow-pink-500/20 hover:bg-pink-600'}`}
+              className={`w-full cursor-pointer py-4 rounded-2xl font-bold text-white shadow-lg transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 ${paymentMethod === 'card' ? 'bg-primary shadow-primary/20 hover:bg-primary/90' : 'bg-pink-500 shadow-pink-500/20 hover:bg-pink-600'}`}
             >
               {isSubmitting ? (
                 <span className="loading loading-spinner loading-sm"></span>
