@@ -110,14 +110,6 @@ const Login = () => {
                         {errors.password && <p className="text-error text-xs mt-1">{errors.password.message}</p>}
                     </div>
 
-
-                    <div className="text-right text-sm">
-                        <a href="/forgot-password" className="text-text-secondary hover:text-primary transition-colors duration-200">
-                            Forgot Password?
-                        </a>
-                    </div>
-
-
                     <button
                         type="submit"
                         className="w-full py-3 mt-2 bg-primary text-white font-bold rounded-lg shadow-lg hover:bg-primary-dark transition-all duration-300 text-lg"

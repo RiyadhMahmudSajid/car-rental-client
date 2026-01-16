@@ -39,7 +39,8 @@ const Payment = ({ id, refetch }) => {
         reset();
       }
     } catch (error) {
-      toast.error("Payment failed:", error);
+      console.log(error);
+      toast.error("Payment failed:");
     } finally {
       setIsSubmitting(false);
     }

@@ -17,7 +17,17 @@ export default function CarDetails() {
   const axiosInstance = useAxios();
   const { user } = useContext(AuthContex);
 
-  const { data: car, isLoading, isError } = useQuery({
+  // fetch user's bookings
+  const { data: bookings = [], refetch, isLoading: loadBookings } = useQuery({
+    queryKey: ['my-booking', user?.email],
+    queryFn: async () => {
+      if (!user?.email) return [];
+      const result = await axiosInstance.get(`/my-booking?email=${user.email}`);
+      return result.data;
+    }
+  });
+
+  const { data: car, isLoading, isError, refetch: refer } = useQuery({
     queryKey: ['car', id],
     queryFn: async () => {
       const res = await axios.get(`/all-cars/${id}`);
@@ -26,36 +36,37 @@ export default function CarDetails() {
     enabled: !!id,
   });
 
+  const isCarAlreadyBooked = bookings.some(
+    (b) => b.car._id === car?._id && b.paymentStatus === "paid"
+  );
+
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
 
-
   const calculateTotalPrice = (startStr, endStr, pricePerDay) => {
     if (!startStr || !endStr || !pricePerDay) return pricePerDay || 0;
-
     const start = new Date(startStr);
     const end = new Date(endStr);
-
     let days = Math.floor((end - start) / (1000 * 60 * 60 * 24));
-
-
     if (days <= 0) days = 1;
-
     return days * pricePerDay;
   };
 
-
   useEffect(() => {
-    if (!car) return
-    console.log("hakim")
+    if (!car) return;
     const price = calculateTotalPrice(pickupDate, returnDate, car?.pricePerDay);
     setTotalPrice(price);
   }, [pickupDate, returnDate, car]);
 
   const { register, handleSubmit, watch } = useForm();
   const selectedArea = watch("area");
+
   const onSubmit = async (data) => {
+    if (isCarAlreadyBooked) {
+      return; 
+    }
+
     const bookingInfo = {
       name: user?.displayName,
       email: user?.email,
@@ -72,17 +83,16 @@ export default function CarDetails() {
     setShowModal(true);
   };
 
-  if (isLoading)
-    return <Loading></Loading>
+  if (isLoading || loadBookings) return <Loading />;
 
   if (isError || !car)
     return <div className="min-h-[60vh] flex items-center justify-center text-red-500">Failed to load car details</div>;
 
   return (
-    <main className="  px-4 py-10 bg-background text-text-base">
+    <main className="px-4 py-10 bg-background text-text-base">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
 
-        {/* LEFT */}
+   
         <section className="lg:col-span-2">
           <div className="bg-surface rounded-2xl overflow-hidden shadow-md">
             <img src={car.image} alt={car.name} className="w-full h-[460px] object-cover hover:scale-105 transition-transform duration-700" />
@@ -112,7 +122,7 @@ export default function CarDetails() {
           </div>
         </section>
 
-        {/* RIGHT */}
+       
         <aside className="lg:col-span-1">
           <div className="sticky top-24 bg-surface border border-border rounded-2xl shadow-lg p-6">
             <h2 className="text-2xl font-semibold mb-1">
@@ -127,7 +137,6 @@ export default function CarDetails() {
                 <input
                   type="date"
                   {...register("pickupDate", { required: true })}
-                  
                   onChange={e => setPickupDate(e.target.value)}
                   className="w-full border border-border bg-background rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:[&::-webkit-calendar-picker-indicator]:invert"
                 />
@@ -139,12 +148,12 @@ export default function CarDetails() {
                   min={pickupDate}
                   {...register("returnDate", { required: true })}
                   onChange={e => setReturnDate(e.target.value)}
-                  className="w-full  border border-border bg-background rounded-md px-3 py-2  text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:[&::-webkit-calendar-picker-indicator]:invert"
+                  className="w-full border border-border bg-background rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary dark:[&::-webkit-calendar-picker-indicator]:invert"
                 />
               </div>
-              <div className=''>
+              <div>
                 <label className="block text-sm text-text-secondary mb-1">Area</label>
-                <select className='  w-full border border-border bg-background rounded-lg px-3 py-2.5  text-sm text-text-base' {...register("area", { required: true })}>
+                <select className='w-full border border-border bg-background rounded-lg px-3 py-2.5 text-sm text-text-base' {...register("area", { required: true })}>
                   <option value="">Select Area</option>
                   <option value="Mirpur">Mirpur</option>
                   <option value="Uttara">Uttara</option>
@@ -156,16 +165,14 @@ export default function CarDetails() {
 
                 {selectedArea === "Other" && (
                   <div className="mt-3">
-                    <label className="block text-sm text-text-secondary mb-1 ">
+                    <label className="block text-sm text-text-secondary mb-1">
                       Enter Your Area
                     </label>
-
                     <input
                       type="text"
                       {...register("customArea", { required: true })}
                       placeholder="Type your area name"
-                      className="w-full border border-border bg-background rounded-lg px-3 py-2.5 text-sm
-                   focus:outline-none focus:ring-2 focus:ring-primary "
+                      className="w-full border border-border bg-background rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
                 )}
@@ -173,15 +180,18 @@ export default function CarDetails() {
 
               <button
                 type="submit"
-                disabled={!user}
+                disabled={!user || isCarAlreadyBooked} 
                 className={`w-full py-2.5 rounded-lg
-    ${user ? "bg-primary text-white cursor-pointer" : "bg-gray-400 cursor-not-allowed"}`}
+                  ${!user || isCarAlreadyBooked
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-primary text-white cursor-pointer"}`}
               >
-                {user ? "Book Now" : "Login to Book"}
+                {isCarAlreadyBooked ? "Already Booked" : (user ? "Book Now" : "Login to Book")}
               </button>
             </form>
 
-            {showModal && <Payment id={bookingId} />}
+           
+            {showModal && <Payment id={bookingId} refetch={refetch} />}
 
             <div className="flex items-center justify-between text-sm text-text-secondary mt-4">
               <div className="flex items-center gap-2"><FaMapMarkerAlt /> {car.location}</div>

@@ -57,13 +57,7 @@ const ManageBookTable = ({ booking, bookibgId, refetch }) => {
             </td>
 
             <td className="py-4 px-4 flex gap-3">
-                <button className="
-                    flex items-center gap-2 
-                    bg-primary text-white px-4 py-2 rounded-lg 
-                    hover:opacity-90 transition
-                ">
-                    <FaEye /> View
-                </button>
+
 
                 <button onClick={handleDelete} className="
                     flex items-center gap-2 
