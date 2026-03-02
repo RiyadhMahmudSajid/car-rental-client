@@ -4,7 +4,7 @@ import { GiGearStickPattern } from 'react-icons/gi';
 import { Link } from 'react-router';
 import { motion } from "motion/react";
 const AllCarsCard = ({ data }) => {
-    console.log(data)
+    
     const {
         _id,
         name,

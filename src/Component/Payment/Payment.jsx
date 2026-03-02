@@ -30,7 +30,7 @@ const Payment = ({ id, refetch }) => {
       const result = await axiosInstance.patch(`/paymentStatus/${id}`, {
        
       });
-      console.log(result);
+     
 
       if (result.data.modifiedCount > 0) {
         toast.success("Payment success")
@@ -39,7 +39,7 @@ const Payment = ({ id, refetch }) => {
         reset();
       }
     } catch (error) {
-      console.log(error);
+      
       toast.error("Payment failed:");
     } finally {
       setIsSubmitting(false);

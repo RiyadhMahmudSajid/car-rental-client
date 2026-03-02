@@ -29,7 +29,7 @@ const Quality = () => {
             );
 
             const imageUrl = res.data.data.display_url;
-            console.log(imageUrl);
+           
 
             const qualityData = {
                 title: data.title,
@@ -41,12 +41,11 @@ const Quality = () => {
                 ]
             };
 
-            console.log("Final Quality Data:", qualityData);
 
 
             const result = axiosInstance.post('/qualityData',qualityData)
 
-            console.log(result);
+           
             if(result.data.insertedId){
 
                 toast.success('Quality data is send')
@@ -59,7 +58,7 @@ const Quality = () => {
             reset();
 
         } catch (error) {
-            console.error("Upload failed", error);
+            
             toast.error('From can not submit')
 
         } finally {

@@ -11,7 +11,7 @@ const Login = () => {
     const {signInUser } = useContext(AuthContex)
     const navigate = useNavigate()
     const location = useLocation()
-    console.log(location)
+  
     const {
         register,
         handleSubmit,
@@ -22,7 +22,7 @@ const Login = () => {
 
 
     const onSubmit =async(data) => {
-        console.log("Login Data:", data);
+       
         await signInUser(data.email,data.password)
         toast.success("Login successful")
         navigate(`${location.state?location.state : '/'}`)

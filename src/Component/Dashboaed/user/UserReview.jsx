@@ -57,7 +57,7 @@ const UserReview = () => {
             }
             
         } catch (error) {
-            console.error("Submission error:", error);
+            //
         }
     };
 

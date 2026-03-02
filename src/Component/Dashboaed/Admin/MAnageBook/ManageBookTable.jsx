@@ -7,7 +7,7 @@ const ManageBookTable = ({ booking, bookibgId, refetch }) => {
     const axiosInstance = useAxios()
     const handleDelete = async () => {
         const res = await axiosInstance.delete(`/delete-booking/${bookibgId}`)
-        console.log(res)
+        
         if (res.data.deletedCount > 0) {
             toast.success("Booking deleted successfully!");
             refetch();

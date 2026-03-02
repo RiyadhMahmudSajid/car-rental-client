@@ -21,7 +21,7 @@ const AddCar = () => {
     } = useForm();
 
     const onSubmit = async data => {
-        console.log(data)
+        
 
         const imageFile = data.image[0];
         const formData = new FormData();
@@ -31,16 +31,16 @@ const AddCar = () => {
             `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_API_IMG}`,
             formData
         );
-        console.log("Full imgbb response:", response);
+       
         const imageUrl = response.data.data.url;
-        console.log("Uploaded Image URL:", imageUrl);
+       
         const carData = {
             ...data,
             image:imageUrl
         }
-        console.log('car is', carData)
+ 
         const res = await axiosInstance.post('/car', carData)
-        console.log(res)
+       
         reset();
     };
 

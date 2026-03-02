@@ -16,9 +16,7 @@ const Alluser = () => {
         }
     });
 
-    const handleDelete = (id) => {
-        console.log("Deleting User ID:", id);
-    };
+  
 
     const filteredUsers = users.filter(u => 
         u.name.toLowerCase().includes(searchTerm.toLowerCase()) || 

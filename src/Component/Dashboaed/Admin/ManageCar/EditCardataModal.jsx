@@ -5,7 +5,7 @@ import useAxios from '../../../Hook/useAxios';
 
 const EditCardataModal = ({ CloseModal, car, refetch }) => {
     const axiosInstance = useAxios()
-    console.log('car is', car)
+    
     const { register, handleSubmit } = useForm({
         defaultValues: {
             name: car.name,
@@ -19,7 +19,7 @@ const EditCardataModal = ({ CloseModal, car, refetch }) => {
     });
     const onSubmit = async (data) => {
         const res = await axiosInstance.put(`/update-car/${car._id}`, data);
-        console.log(res)
+       
         if (res.data.modifiedCount > 0) {
             refetch();
             CloseModal();

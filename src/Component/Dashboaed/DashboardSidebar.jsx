@@ -40,14 +40,14 @@ const DashboardSidebar = ({ role }) => {
 
 
     let navLinks = role === "Admin" ? adminLinks : userLinks;
-    console.log(navLinks)
+   
     const handleLogOut = async () => {
         try {
             await logOut();
             navigate('/');
 
         } catch (error) {
-            console.error("Logout failed:", error);
+            //
         }
     };
 

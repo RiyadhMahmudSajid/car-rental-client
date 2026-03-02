@@ -10,7 +10,7 @@ const Contact = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const axiosInstance = useAxios()
     const onSubmit = async (data) => {
-        console.log("Form Data:", data);
+       
         const messageInfo = {
             email: data.email,
             name: data.fullName,
@@ -25,7 +25,7 @@ const Contact = () => {
         if (result.data.insertedId) {
             toast.success("Message sent!");
         }
-        console.log(result);
+        
 
 
     };

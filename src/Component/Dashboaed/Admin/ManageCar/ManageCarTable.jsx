@@ -15,7 +15,7 @@ const ManageCarTable = ({ cars, refetch }) => {
 
 
         const res = await axiosInstance.delete(`/delete-car/${carId}`);
-        console.log(res)
+       
         if (res.data.deletedCount > 0) {
             toast.success("Car deleted successfully!");
             refetch(); 

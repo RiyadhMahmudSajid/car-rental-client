@@ -10,11 +10,11 @@ const QualityFeatured = () => {
         queryKey: ['quality'],
         queryFn: async () => {
             const result = await axiosInstance.get('/quality')
-            console.log(result);
+            
             return result.data
         }
     })
-    console.log(quality);
+ 
     const subsections = quality[0]?.subsections || [];
 
     const [activeTab, setActiveTab] = useState(null);
@@ -28,13 +28,13 @@ const QualityFeatured = () => {
     const activeContent = subsections.find(
         (item) => item.subtitle === activeTab
     )
-    console.log(activeContent)
+   
 
     if (isLoading) return <Loading></Loading>
     if (!quality.length) return null;
 
     const { title, image } = quality[0];
-    console.log(activeContent);
+    
 
 
     return (

@@ -31,9 +31,9 @@ const Register = () => {
                 formData
             );
 
-            console.log("Full imgbb response:", response);
+           
             const imageUrl = response.data.data.url;
-            console.log("Uploaded Image URL:", imageUrl);
+            
            
             const userProfile = {
                 displayName: data.name,
@@ -50,12 +50,12 @@ const Register = () => {
                 last_login: new Date().toISOString()
             };
             const res = await axiosInstance.post("/user", userInfo);
-            console.log("Saved to DB:", res.data);
+           
             toast.success("Account created successfully")
             
 
         } catch (error) {
-            console.error("Registration Error:", error);
+            
              toast.error("Registration failed")
         }
     };
